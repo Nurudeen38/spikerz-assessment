@@ -1,0 +1,37 @@
+// Collapsible Cards Styles
+
+.server-name-box {
+    background-color: #000000 !important;
+    border-radius: 0.5rem;
+    padding: 0.375rem 1rem;
+  }
+  
+  .max-h-0 {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
+  .max-h-\[500px\] {
+    max-height: 31.25rem; 
+    opacity: 1;
+  }
+  
+  .rotate-180 {
+    transform: rotate(180deg);
+  }
+  
+  button {
+    &:hover {
+      background-color: rgba(249, 250, 251, 0.5);
+    }
+    
+    &:active {
+      transform: scale(0.995);
+    }
+  }
+  
+  * {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }

@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  // Colors
+  --color-primary: #10B981; // emerald-500
+  --color-primary-light: #D1FAE5; // emerald-100
+  --color-danger: #EF4444; // red-500
+  --color-warning: #F59E0B; // orange-500
+  --color-info: #3B82F6; // blue-500
+  --color-success: #10B981; // emerald-500
+  --color-success: #02983E;
+  --color-warning: #FF9500;
+  --color-critical: #E5372B;
+  --color-gray-soft-25: #FAFAFA;
+  --color-gray-soft-400: #858D9D;
+  --color-gray-soft-500: #667085;
+  --color-gray-soft-700: #525D73;
+  --color-critical-dark: #C6190D;
+  --color-gray-soft-50: #F0F1F3;
+  --letter-spacing-1-percent: 0.01em;
+  --letter-spacing-400: 0.4px;
+  --shadow-tooltip: 0px 2px 2px 2px rgba(0, 0, 0, 0.16);
+  --shadow-card-sm: 0px 1px 3px 0px rgba(0, 0, 0, 0.05), 0px 1px 2px 0px rgba(0, 0, 0, 0.10);
+  --shadow-card-md: 0px 2.9px 4px 0px rgba(0, 0, 0, 0.05);
+  // Spacing tokens
+  --spacing-xs: 0.25rem; // 4px
+  --spacing-sm: 0.5rem; // 8px
+  --spacing-md: 1rem; // 16px
+  --spacing-lg: 1.5rem; // 24px
+  --spacing-xl: 2rem; // 32px
+  --spacing-2xl: 2.5rem; // 40px
+
+  // Component specific widths
+  --sidebar-width: 15rem; // 240px
+  --sidebar-collapsed-width: 4rem; // 64px
+  --graph-height: 19.1875rem; // 307px
+  --asset-list-width: 22.9375rem; // 367px
+  --risk-summary-width: 21.25rem; // 340px
+  --right-column-width: 49.1875rem; // 787px
+
+  // Border radius tokens
+  --radius-sm: 0.5rem; // 8px
+  --radius-md: 0.9375rem; // 15px
+  --radius-lg: 1.25rem; // 20px
+
+  // Node sizes
+  --node-radius: 1.5rem; // 24px
+  --node-badge-radius: 0.75rem; // 12px
+  --node-icon-size: 1.25rem; // 20px
+
+  // Typography
+  --font-size-xs: 0.75rem; // 12px
+  --font-size-xss: 0.8125rem; // 13px
+  --font-size-sm: 0.875rem; // 14px
+  --font-size-base: 1rem; // 16px
+  --font-size-base-md: 0.937rem; // 15px
+  --font-size-lg: 1.125rem; // 18px
+  --font-size-xl: 1.25rem; // 20px
+  --font-size-2xl: 1.5rem; // 24px
+
+  // Line Height 
+  --line-height-sm:1.125rem;
+  --line-height-md:1.375rem;
+  --line-height-base:1.3125rem;
+  --line-height-lg:2.375rem;
+}
+
+* {
+  scrollbar-width: none;
+}

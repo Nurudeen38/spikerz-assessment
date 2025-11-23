@@ -1,0 +1,321 @@
+<div class="flex h-screen bg-gray-25">
+  <div class="relative flex-shrink-0">
+    <app-sidebar></app-sidebar>
+  </div>
+
+  <div class="flex flex-col lg:flex-row gap-4 md:gap-8 flex-1 overflow-auto">
+    <!-- Mobile: Single Column Layout -->
+    <div class="flex flex-col gap-4 md:gap-5 p-4 md:p-8 lg:hidden w-full">
+      <app-card [padding]="'lg'">
+        <div class="space-y-6">
+          <section>
+            <h2
+              class=" text-xl leading-md font-bold tracking-1 capitalize text-emerald-600 mb-3"
+            >
+              Description
+            </h2>
+            <p
+              class=" text-xs leading-base font-normal tracking-1 capitalize text-gray-700"
+            >
+              Lorem Ipsum Dolor Sit Amet Consectetur. Aenean Sodales Pellentesque Gravida Nibh Et
+              Magna Faucibus. Dui Commodo Ut Metus Amet Egestas Habitant Viverra. Quisque Fusce
+              Senectus Facilisis Non Diam Leo Nulla Sem Pellentesque. Sit In Vel Sed Cursus Metus
+              Sit Fringilla Vestibulum.
+            </p>
+          </section>
+
+          <section>
+            <h2
+              class=" text-xl leading-md font-bold tracking-1 capitalize text-emerald-600 mb-3"
+            >
+              Extra
+            </h2>
+            <p
+              class=" text-xs leading-base font-normal tracking-1 capitalize text-gray-700 mb-4"
+            >
+              Lorem ipsum dolor sit amet consectetur. Tempus a id adipiscing fames egestas tellus
+              dis pretium tempus. Justo nisl nisl lorem lectus id ornare. Rhoncus in egestas in amet
+              porttitor pellentesque sit. Amet gravida integer velit felis. Eu consectetur interdum
+              auctor sed aliquam. Eu pulvinar arcu sed id. Duis a aliquem eu quisque commodo lectus.
+              Lectus ipsum velit purus viverra vulputate viverra in nunc nulla. Euismod rhoncus
+              mauris urna orci gravida sagittis netus. Amet mus in vel etiam. Interdum habitant
+              congue massa in etiam sit. Commodo nibh viverra lobortis augue lorem quam lorem
+              suspendisse.
+            </p>
+
+            <div class="border-t border-b border-gray-200 py-3">
+              <div class="flex py-2 gap-2">
+                <span
+                  class=" text-base leading-md font-bold tracking-1 capitalize text-slate-700 flex-shrink-0"
+                  >Lorem Ipsum Dolor</span
+                >
+                <span
+                  class=" text-base leading-md font-normal tracking-1 capitalize text-gray-700"
+                  >10/19/2017</span
+                >
+              </div>
+              <div class="flex py-2 gap-2">
+                <span
+                  class=" text-base-md leading-md font-bold tracking-1 capitalize text-slate-700 flex-shrink-0"
+                  >Lorem Ipsum Dolor</span
+                >
+                <span
+                  class=" text-base-md leading-md font-normal tracking-1 capitalize text-gray-700"
+                  >Ut</span
+                >
+              </div>
+              <div class="flex py-2 gap-2">
+                <span
+                  class=" text-base-md leading-md font-bold tracking-1 capitalize text-slate-700 flex-shrink-0"
+                  >Lorem Ipsum Dolor</span
+                >
+                <span
+                  class=" text-base-md leading-md font-normal tracking-1 capitalize text-gray-700"
+                  >Eros</span
+                >
+              </div>
+              <div class="flex py-2 gap-2">
+                <span
+                  class=" text-base-md leading-md font-bold tracking-1 capitalize text-slate-700 flex-shrink-0"
+                  >Lorem Ipsum Dolor</span
+                >
+                <div class="flex items-center gap-2">
+                  <mat-icon class="text-emerald-500 text-base">check</mat-icon>
+                  <span
+                    class=" text-base-md leading-md font-normal tracking-1 capitalize text-gray-700"
+                    >Yes</span
+                  >
+                </div>
+              </div>
+              <div class="flex py-2 gap-2">
+                <span
+                  class=" text-base-md leading-md font-bold tracking-1 capitalize text-slate-700 flex-shrink-0"
+                  >Lorem Ipsum Dolor</span
+                >
+                <span
+                  class=" text-base-md leading-md font-normal tracking-1 capitalize text-gray-700"
+                  >Sit</span
+                >
+              </div>
+              <div class="flex py-2 gap-2">
+                <span
+                  class=" text-base-md leading-md font-bold tracking-1 capitalize text-slate-700 flex-shrink-0"
+                  >Lorem Ipsum Dolor</span
+                >
+                <span
+                  class=" text-base-md leading-md font-normal tracking-1 capitalize text-gray-700"
+                  >Lorem Ipsum Dolor</span
+                >
+              </div>
+              <div class="flex py-2 gap-2">
+                <span
+                  class=" text-base-md leading-md font-bold tracking-1 capitalize text-slate-700 flex-shrink-0"
+                  >Lorem Ipsum Dolor</span
+                >
+                <span
+                  class=" text-base-md leading-md font-normal tracking-1 capitalize text-gray-700"
+                  >Lorem Ipsum Dolor</span
+                >
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="font-bold text-gray-900 mb-3 text-sm">Lorem Ipsum Dolor Sit</h2>
+            <app-collapsible-cards></app-collapsible-cards>
+          </section>
+        </div>
+      </app-card>
+
+      <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div class="px-4 py-3">
+          <h2
+            class=" text-xl leading-md font-bold tracking-1 capitalize text-success"
+          >
+            Lorem Lorem Lorem
+          </h2>
+        </div>
+
+        <div class="bg-gray-50 mx-3 mb-3 rounded-xl p-3 overflow-hidden">
+          @if (graphService.isLoading()) {
+            <div class="flex items-center justify-center h-64">
+              <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+            </div>
+          } @else {
+            <app-graph-view />
+          }
+        </div>
+
+        <div class="px-4 pb-4">
+          <app-node-popover />
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop: Two Column Layout with Centered Content -->
+    <div class="hidden lg:flex lg:flex-row flex-1 p-8 overflow-hidden w-full justify-center">
+      <div class="w-full max-w-[1400px] flex gap-3">
+        <!-- Left Column: Description & Extra - Responsive width -->
+        <div class="lg:max-w-[385px] flex-shrink-0 border border-gray-200 rounded-2xl overflow-y-auto bg-white  shadow-sm">
+          <div class=" p-5 px-[30px]">
+            <div class="flex flex-col gap-5">
+              <section>
+                <h2
+                  class=" text-xl leading-md font-bold tracking-1 capitalize text-emerald-600 mb-4"
+                >
+                  Description
+                </h2>
+                <p
+                  class=" text-xs leading-base font-normal tracking-1 capitalize text-gray-700"
+                >
+                  Lorem Ipsum Dolor Sit Amet Consectetur. Aenean Sodales Pellentesque Gravida Nibh
+                  Et Magna Faucibus. Dui Commodo Ut Metus Amet Egestas Habitant Viverra. Quisque
+                  Fusce Senectus Facilisis Non Diam Leo Nulla Sem Pellentesque. Sit In Vel Sed
+                  Cursus Metus Sit Fringilla Vestibulum.
+                </p>
+              </section>
+
+              <section>
+                <h2
+                  class=" text-xl leading-md font-bold tracking-1 capitalize text-emerald-600 mb-4 mt-5"
+                >
+                  Extra
+                </h2>
+                <p
+                  class=" text-xs leading-base font-normal tracking-1 capitalize text-gray-700 mb-8"
+                >
+                  Lorem ipsum dolor sit amet consectetur. Tempus a id adipiscing fames egestas
+                  tellus dis pretium tempus. Justo nisl nisl lorem lectus id ornare. Rhoncus in
+                  egestas in amet porttitor pellentesque sit. Amet gravida integer velit felis. Eu
+                  consectetur interdum auctor sed aliquam. Eu pulvinar arcu sed id. Duis a aliquem
+                  eu quisque commodo lectus. Lectus ipsum velit purus viverra vulputate viverra in
+                  nunc nulla. Euismod rhoncus mauris urna orci gravida sagittis netus. Amet mus in
+                  vel etiam. Interdum habitant congue massa in etiam sit. Commodo nibh viverra
+                  lobortis augue lorem quam lorem suspendisse.
+                </p>
+
+                <div class="border-t border-b border-gray-200 py-3">
+                  <div class="flex py-2 gap-4">
+                    <span
+                      class=" text-base-md leading-md font-bold tracking-1 capitalize text-slate-700 flex-shrink-0"
+                      >Lorem Ipsum Dolor</span
+                    >
+                    <span
+                      class=" text-base-md leading-md font-normal tracking-1 capitalize text-gray-700"
+                      >10/19/2017</span
+                    >
+                  </div>
+                  <div class="flex py-2 gap-4">
+                    <span
+                      class=" text-base-md leading-md font-bold tracking-1 capitalize text-slate-700 flex-shrink-0"
+                      >Lorem Ipsum Dolor</span
+                    >
+                    <span
+                      class=" text-base-md leading-md font-normal tracking-1 capitalize text-gray-700"
+                      >Ut</span
+                    >
+                  </div>
+                  <div class="flex py-2 gap-4">
+                    <span
+                      class=" text-base-md leading-md font-bold tracking-1 capitalize text-slate-700 flex-shrink-0"
+                      >Lorem Ipsum Dolor</span
+                    >
+                    <span
+                      class=" text-base-md leading-md font-normal tracking-1 capitalize text-gray-700"
+                      >Eros</span
+                    >
+                  </div>
+                  <div class="flex py-2 gap-4">
+                    <span
+                      class=" text-base-md leading-md font-bold tracking-1 capitalize text-slate-700 flex-shrink-0"
+                      >Lorem Ipsum Dolor</span
+                    >
+                    <div class="flex items-center gap-2">
+                      <mat-icon class="text-emerald-500 text-base">check</mat-icon>
+                      <span
+                        class=" text-base-md leading-md font-normal tracking-1 capitalize text-gray-700"
+                        >Yes</span
+                      >
+                    </div>
+                  </div>
+                  <div class="flex py-2 gap-4">
+                    <span
+                      class=" text-base-md leading-md font-bold tracking-1 capitalize text-slate-700 flex-shrink-0"
+                      >Lorem Ipsum Dolor</span
+                    >
+                    <span
+                      class=" text-base-md leading-md font-normal tracking-1 capitalize text-gray-700"
+                      >Sit</span
+                    >
+                  </div>
+                  <div class="flex py-2 gap-4">
+                    <span
+                      class=" text-base-md leading-md font-bold tracking-1 capitalize text-slate-700 flex-shrink-0"
+                      >Lorem Ipsum Dolor</span
+                    >
+                    <span
+                      class=" text-base-md leading-md font-normal tracking-1 capitalize text-gray-700"
+                      >Lorem Ipsum Dolor</span
+                    >
+                  </div>
+                  <div class="flex py-2 gap-4">
+                    <span
+                      class=" text-base-md leading-md font-bold tracking-1 capitalize text-slate-700 flex-shrink-0"
+                      >Lorem Ipsum Dolor</span
+                    >
+                    <span
+                      class=" text-base-md leading-md font-normal tracking-1 capitalize text-gray-700"
+                      >Lorem Ipsum Dolor</span
+                    >
+                  </div>
+                </div>
+              </section>
+
+              <section>
+                <h2
+                  class="font-bold text-gray-900 mb-4 text-base-md leading- lleading-md tracking-1 capitalize"
+                >
+                  Lorem Ipsum Dolor Sit
+                </h2>
+                <app-collapsible-cards></app-collapsible-cards>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Graph and popover - Flexible width with max constraint -->
+        <div class="flex-1 max-w-[860px] max-h-fit shadow-sm bg-white border rounded-2xl overflow-y-auto px-8 pt-5 pb-20">
+          <div
+          >
+            <!-- Title -->
+            <div>
+              <h2
+                class=" text-xl leading-md font-bold tracking-1 capitalize text-success mb-5"
+              >
+                Lorem Lorem Lorem
+              </h2>
+            </div>
+
+            <!-- Graph Section -->
+            <div
+              class="rounded-xl bg-gray-25"
+            >
+              @if (graphService.isLoading()) {
+                <div class="flex items-center justify-center h-[19.25rem]">
+                  <div
+                    class="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"
+                  ></div>
+                </div>
+              } @else {
+                <app-graph-view />
+              }
+            </div>
+
+            <!-- Popover Section -->
+            <app-node-popover />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
