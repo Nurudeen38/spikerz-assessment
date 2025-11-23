@@ -22,8 +22,20 @@ export class GraphDataService {
     this._isLoading.set(true);
 
     setTimeout(() => {
+      // Type-safe conversion - MOCK_GRAPH_DATA.nodes already matches GraphNode structure (excluding x/y)
+      const nodes: GraphNode[] = MOCK_GRAPH_DATA.nodes.map(node => ({
+        id: node.id,
+        label: node.label,
+        value: node.value,
+        ...(node.sublabel && { sublabel: node.sublabel }),
+        ...(node.color && { color: node.color }),
+        ...(node.icon && { icon: node.icon }),
+        ...(node.badge !== undefined && { badge: node.badge }),
+        ...(node.status && { status: node.status }),
+      }));
+
       const mockData: GraphData = {
-        nodes: MOCK_GRAPH_DATA.nodes as GraphNode[],
+        nodes,
         edges: MOCK_GRAPH_DATA.edges,
       };
 

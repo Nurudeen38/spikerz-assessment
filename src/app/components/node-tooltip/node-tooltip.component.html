@@ -1,51 +1,279 @@
 @if (data) {
     <div 
-      class="absolute bg-white rounded-lg shadow-lg border border-gray-200 p-4 z-50 pointer-events-none"
+      class="tooltip-container absolute bg-white rounded-lg shadow-card-md border border-gray-100 p-4 z-50 pointer-events-auto"
       [style.left.px]="position.x"
       [style.top.px]="position.y">
       
-      <!-- First Node Type -->
+      <!-- Node 1: Email Type -->
       @if (data.type === 'email') {
-        <div class="space-y-3">
-          <!-- Red Header -->
-          <h3 class="text-sm font-semibold text-red-600">{{ data.title }}</h3>
+        <div class="space-y-3 min-w-[260px] md:min-w-[320px]">
+          <!-- Red Header with Highlight -->
+          @if (data.title) {
+            <h3 class="text-sm font-semibold leading-tight">
+              @if (isHighlightedText(data.title)) {
+                @for (part of data.title.parts; track $index) {
+                  @if (isTextHighlight(part)) {
+                    <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
+                  } @else {
+                    <span class="text-gray-800">{{ part }}</span>
+                  }
+                }
+              } @else {
+                <span class="text-red-600">{{ data.title }}</span>
+              }
+            </h3>
+          }
           
-          <!-- Grid of Numbers -->
+          <!-- Grid of Numbers with Red Highlight -->
           @if (data.gridNumbers) {
             <div class="grid grid-cols-3 gap-2">
               @for (number of data.gridNumbers; track $index) {
-                <span class="text-xs text-red-600 font-medium">{{ number }}</span>
+                <span class="text-xs font-medium bg-red-100 text-red-700 px-2 py-1 rounded inline-block">{{ number }}</span>
               }
             </div>
           }
           
-          <!-- Bottom Text -->
+          <!-- Bottom Text with Purple Highlight -->
           @if (data.documentTitle) {
-            <div class="text-xs text-blue-600 font-medium">{{ data.documentTitle }}</div>
+            <div class="text-xs font-medium">
+              @if (isHighlightedText(data.documentTitle)) {
+                @for (part of data.documentTitle.parts; track $index) {
+                  @if (isTextHighlight(part)) {
+                    <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
+                  } @else {
+                    <span class="text-gray-700">{{ part }}</span>
+                  }
+                }
+              } @else {
+                <span class="text-blue-600">{{ data.documentTitle }}</span>
+              }
+            </div>
           }
         </div>
       }
       
-      <!-- Server Node Type (Nodes 2 & 3) -->
-      @if (data.type === 'server') {
-        <div class="space-y-3 min-w-xs">
-          <!-- Server Info -->
+      <!-- Nodes 2 & 3: Server with IP and Red X -->
+      @if (data.type === 'server-with-ip') {
+        <div class="space-y-3 min-w-[260px] md:min-w-[320px]">
+          <!-- Server Info with Icon (with or without Red X) -->
           @if (data.serverName) {
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 bg-blue-100 rounded flex items-center justify-center">
+            <div class="flex items-center gap-3">
+              <div class="relative w-8 h-8 bg-blue-100 rounded flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="6" width="20" height="12" rx="2"/>
+                  <line x1="6" y1="12" x2="6.01" y2="12"/>
+                  <line x1="10" y1="12" x2="10.01" y2="12"/>
+                </svg>
+                @if (data.hasRedX) {
+                  <div class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center shadow-sm">
+                    <svg class="w-2.5 h-2.5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <line x1="6" y1="6" x2="18" y2="18"/>
+                      <line x1="18" y1="6" x2="6" y2="18"/>
+                    </svg>
+                  </div>
+                }
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-medium text-gray-900 truncate">{{ data.serverName }}</div>
+                @if (data.ipAddress) {
+                  <div class="text-xs text-gray-500 truncate">{{ data.ipAddress }}</div>
+                }
+              </div>
+            </div>
+          }
+          
+          <!-- Document Info with Highlighting -->
+          @if (data.documentTitle) {
+            <div class="flex items-start gap-2 mt-1">
+              <svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+              <span class="text-xs text-gray-700">
+                @if (isHighlightedText(data.documentTitle)) {
+                  @for (part of data.documentTitle.parts; track $index) {
+                    @if (isTextHighlight(part)) {
+                      <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
+                    } @else {
+                      <span class="text-gray-700">{{ part }}</span>
+                    }
+                  }
+                } @else {
+                  {{ data.documentTitle }}
+                }
+              </span>
+            </div>
+          }
+          
+          <!-- Content Lines with Highlighting -->
+          @if (data.contentLines) {
+            <div class="space-y-1 mt-1">
+              @for (line of data.contentLines; track $index) {
+                <div class="text-xs text-gray-700">
+                  @if (isHighlightedText(line)) {
+                    @for (part of line.parts; track $index) {
+                      @if (isTextHighlight(part)) {
+                        <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
+                      } @else {
+                        <span class="text-gray-700">{{ part }}</span>
+                      }
+                    }
+                  } @else {
+                    {{ line }}
+                  }
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+      
+      <!-- Node 4: Simple Server Type -->
+      @if (data.type === 'server-simple') {
+        <div class="space-y-3 min-w-[260px] md:min-w-[320px]">
+          <!-- Server Info with Icon (no Red X) -->
+          @if (data.serverName) {
+            <div class="flex items-center gap-3">
+              <div class="relative w-8 h-8 bg-blue-100 rounded flex items-center justify-center flex-shrink-0">
                 <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="2" y="6" width="20" height="12" rx="2"/>
                   <line x1="6" y1="12" x2="6.01" y2="12"/>
                   <line x1="10" y1="12" x2="10.01" y2="12"/>
                 </svg>
               </div>
-              <span class="text-sm font-medium text-gray-900">{{ data.serverName }}</span>
+              <span class="text-sm font-medium text-gray-900 truncate">{{ data.serverName }}</span>
+            </div>
+          }
+          
+          <!-- Document Info with Highlighting -->
+          @if (data.documentTitle) {
+            <div class="flex items-start gap-2 mt-1">
+              <svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+              <span class="text-xs text-gray-700">
+                @if (isHighlightedText(data.documentTitle)) {
+                  @for (part of data.documentTitle.parts; track $index) {
+                    @if (isTextHighlight(part)) {
+                      <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
+                    } @else {
+                      <span class="text-gray-700">{{ part }}</span>
+                    }
+                  }
+                } @else {
+                  {{ data.documentTitle }}
+                }
+              </span>
+            </div>
+          }
+          
+          <!-- Content Lines with Highlighting -->
+          @if (data.contentLines) {
+            <div class="space-y-1 mt-1">
+              @for (line of data.contentLines; track $index) {
+                <div class="text-xs text-gray-700">
+                  @if (isHighlightedText(line)) {
+                    @for (part of line.parts; track $index) {
+                      @if (isTextHighlight(part)) {
+                        <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
+                      } @else {
+                        <span class="text-gray-700">{{ part }}</span>
+                      }
+                    }
+                  } @else {
+                    {{ line }}
+                  }
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+      
+      <!-- Node 5: Branch Server Type (Complex) -->
+      @if (data.type === 'branch-server') {
+        <div class="space-y-3 min-w-[300px] md:min-w-[360px]">
+          <!-- Server Info with Icon (no Red X) -->
+          @if (data.serverName) {
+            <div class="flex items-center gap-3">
+              <div class="relative w-8 h-8 bg-blue-100 rounded flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="6" width="20" height="12" rx="2"/>
+                  <line x1="6" y1="12" x2="6.01" y2="12"/>
+                  <line x1="10" y1="12" x2="10.01" y2="12"/>
+                </svg>
+              </div>
+              <span class="text-sm font-medium text-gray-900 truncate">{{ data.serverName }}</span>
+            </div>
+          }
+          
+          <!-- Document Info with Multiple Highlights -->
+          @if (data.documentTitle) {
+            <div class="flex items-start gap-2 mt-1">
+              <svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+              <span class="text-xs text-gray-700">
+                @if (isHighlightedText(data.documentTitle)) {
+                  @for (part of data.documentTitle.parts; track $index) {
+                    @if (isTextHighlight(part)) {
+                      <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
+                    } @else {
+                      <span class="text-gray-700">{{ part }}</span>
+                    }
+                  }
+                } @else {
+                  {{ data.documentTitle }}
+                }
+              </span>
+            </div>
+          }
+          
+          <!-- Multiple Content Lines with Various Highlights -->
+          @if (data.contentLines) {
+            <div class="space-y-1 mt-1">
+              @for (line of data.contentLines; track $index) {
+                <div class="text-xs text-gray-700">
+                  @if (isHighlightedText(line)) {
+                    @for (part of line.parts; track $index) {
+                      @if (isTextHighlight(part)) {
+                        <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
+                      } @else {
+                        <span class="text-gray-700">{{ part }}</span>
+                      }
+                    }
+                  } @else {
+                    {{ line }}
+                  }
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+      
+      <!-- Legacy Server Node Type (fallback) -->
+      @if (data.type === 'server') {
+        <div class="space-y-3 min-w-[260px] md:min-w-[320px]">
+          <!-- Server Info -->
+          @if (data.serverName) {
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 bg-blue-100 rounded flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="6" width="20" height="12" rx="2"/>
+                  <line x1="6" y1="12" x2="6.01" y2="12"/>
+                  <line x1="10" y1="12" x2="10.01" y2="12"/>
+                </svg>
+              </div>
+              <span class="text-sm font-medium text-gray-900 truncate">{{ data.serverName }}</span>
             </div>
           }
           
           <!-- Document Info -->
           @if (data.documentTitle) {
-            <div class="flex items-start gap-2">
+            <div class="flex items-start gap-2 mt-1">
               <svg class="w-4 h-4 text-gray-400 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                 <polyline points="14 2 14 8 20 8"/>
@@ -56,7 +284,7 @@
           
           <!-- Content Lines -->
           @if (data.contentLines) {
-            <div class="space-y-1">
+            <div class="space-y-1 mt-1">
               @for (line of data.contentLines; track $index) {
                 <div class="text-xs text-blue-600 font-medium">{{ line }}</div>
               }
@@ -65,7 +293,7 @@
           
           <!-- Badges -->
           @if (data.badges && data.badges.length > 0) {
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 mt-2">
               @for (badge of data.badges; track $index) {
                 <div class="flex items-center gap-1">
                   <div 
@@ -79,50 +307,6 @@
                   </div>
                   <span class="text-xs font-medium text-gray-700">{{ badge.text }}</span>
                 </div>
-              }
-            </div>
-          }
-        </div>
-      }
-      
-      <!-- Branch Server Node Type (Nodes 4 & 5) -->
-      @if (data.type === 'branch-server') {
-        <div class="space-y-3 min-w-60">
-          <!-- Server Info with IP -->
-          @if (data.serverName) {
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 bg-blue-100 rounded flex items-center justify-center">
-                <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="2" y="6" width="20" height="12" rx="2"/>
-                  <line x1="6" y1="12" x2="6.01" y2="12"/>
-                  <line x1="10" y1="12" x2="10.01" y2="12"/>
-                </svg>
-              </div>
-              <div>
-                <div class="text-sm font-medium text-gray-900">{{ data.serverName }}</div>
-                @if (data.ipAddress) {
-                  <div class="text-xs text-gray-500">{{ data.ipAddress }}</div>
-                }
-              </div>
-            </div>
-          }
-          
-          <!-- Document Info -->
-          @if (data.documentTitle) {
-            <div class="flex items-start gap-2">
-              <svg class="w-4 h-4 text-gray-400 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-              </svg>
-              <span class="text-xs text-gray-700">{{ data.documentTitle }}</span>
-            </div>
-          }
-          
-          <!-- Content -->
-          @if (data.contentLines) {
-            <div class="space-y-1">
-              @for (line of data.contentLines; track $index) {
-                <div class="text-sm text-gray-700">{{ line }}</div>
               }
             </div>
           }

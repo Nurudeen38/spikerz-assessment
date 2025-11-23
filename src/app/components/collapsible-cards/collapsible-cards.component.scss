@@ -2,8 +2,8 @@
 
 .server-name-box {
     background-color: #000000 !important;
-    border-radius: 0.5rem;
-    padding: 0.375rem 1rem;
+    border-radius: var(--radius-sm);
+    padding: calc(var(--spacing-sm) * 0.75) var(--spacing-md);
   }
   
   .max-h-0 {
@@ -14,7 +14,7 @@
   }
   
   .max-h-\[500px\] {
-    max-height: 31.25rem; 
+    max-height: var(--spacing-500px); 
     opacity: 1;
   }
   

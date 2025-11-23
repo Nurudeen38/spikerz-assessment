@@ -57,7 +57,7 @@ export class GraphViewComponent implements OnDestroy {
 
     const startX = 80;
     const branchOffset = 70;
-    const baseSpacing = 128;
+    const baseSpacing = 160;
 
     const positions = [
       { x: startX, y: centerY },
@@ -157,11 +157,13 @@ export class GraphViewComponent implements OnDestroy {
 
     const svgRect = this.svgCanvas?.nativeElement.getBoundingClientRect();
     const containerWidth = svgRect?.width ?? 649;
+    const containerHeight = svgRect?.height ?? 250;
     const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1024;
     const isMobile = screenWidth < 768;
 
     let x = (node.x ?? 0) + 50;
-    let y = (node.y ?? 0) - 80;
+    // Position tooltip below the node (node center + radius + text height + gap)
+    let y = (node.y ?? 0) + 50;
 
     if (isMobile) {
       if (node.id === '4' || node.id === '5') {
@@ -170,17 +172,15 @@ export class GraphViewComponent implements OnDestroy {
         x = containerWidth / 2 - 120;
       }
     } else {
-      if ((node.x ?? 0) < 200) {
-        x = (node.x ?? 0) + 50;
+      if ((node.x ?? 0) < 300) {
+        x = (node.x ?? 0) - 50
       }
 
-      if ((node.x ?? 0) > containerWidth - 250) {
+      else if ((node.x ?? 0) > containerWidth - 250) {
         x = (node.x ?? 0) - 250;
+      } else {
+        x = (node.x ?? 0) - 50
       }
-    }
-
-    if ((node.y ?? 0) < 100) {
-      y = (node.y ?? 0) + 50;
     }
 
     const position = { x, y };

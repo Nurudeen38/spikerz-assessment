@@ -4,14 +4,14 @@
   position: relative;
   
   &-expanded {
-    width: var(--sidebar-width, 15.625rem);
+    width: var(--sidebar-width);
   }
   
   &-collapsed {
-    width: var(--sidebar-collapsed-width, 4rem);
+    width: var(--sidebar-collapsed-width);
     
     @media (min-width: 1024px) {
-      width: 5rem; 
+      width: var(--sidebar-collapsed-width-lg); 
     }
     
     nav {
@@ -23,14 +23,14 @@
   // Responsive adjustments
   @media (max-width: 768px) {
     &-expanded {
-      width: 50vw;
+      width: var(--sidebar-width-mobile);
       position: fixed;
       left: 0;
       top: 0;
       bottom: 0;
-      z-index: 50;
-      box-shadow: 0.125rem 0 0.5rem rgba(0, 0, 0, 0.1);
-      padding-bottom: max(5rem, env(safe-area-inset-bottom));
+      z-index: var(--z-index-sidebar);
+      box-shadow: var(--shadow-overlay);
+      padding-bottom: max(var(--spacing-5xl), env(safe-area-inset-bottom));
     }
     
     &-collapsed {
@@ -42,33 +42,33 @@
 
   @media (max-width: 640px) {
     &-expanded {
-      width: 50vw;
-      min-width: 200px;
+      width: var(--sidebar-width-mobile);
+      min-width: var(--sidebar-min-width-mobile);
     }
   }
 }
 
 .menu-item {
-  color: #525D73;
+  color: var(--color-gray-soft-700);
 }
 
 .collapse-button {
   position: fixed;
-  top: calc(3.5rem - 8px);
-  width: 2rem;
-  height: 2rem;
-  background: #00732E;
-  border: 0.1875rem solid #F0F1F3;
-  border-radius: 50%;
-  box-shadow: 0 0.0625rem 0.25rem rgba(12, 12, 13, 0.05);
+  top: var(--button-top-offset);
+  width: var(--button-size-md);
+  height: var(--button-size-md);
+  background: var(--color-primary-button);
+  border: var(--button-border-width) solid var(--color-gray-soft-50);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-button);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease-in-out;
+  z-index: var(--z-index-modal);
+  transition: left var(--duration-slow) cubic-bezier(0.4, 0, 0.2, 1), opacity var(--duration-normal) ease-in-out;
   
   &:hover {
-    background: #005a24;
+    background: var(--color-primary-dark);
   }
 
   @media (max-width: 768px) {
@@ -76,8 +76,8 @@
   }
 
   @media (max-width: 640px) {
-    width: 1.75rem;
-    height: 1.75rem;
+    width: var(--button-size-sm);
+    height: var(--button-size-sm);
   }
 }
 
@@ -111,7 +111,7 @@
 .transition-all {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
+  transition-duration: var(--duration-slow);
 }
 
 button {
@@ -146,6 +146,6 @@ button {
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 40;
+    z-index: var(--z-index-overlay);
   }
 }

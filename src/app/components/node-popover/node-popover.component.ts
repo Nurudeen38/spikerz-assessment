@@ -12,11 +12,14 @@ import { GraphDataService } from '../../services/graph-data.service';
 })
 export class NodePopoverComponent {
   private readonly graphService = inject(GraphDataService);
-  Math = Math;
 
   readonly popoverData = this.graphService.selectedNode;
   readonly currentPage = signal(1);
   readonly pageSize = 2;
+  
+  // Constants for donut chart calculations
+  private readonly DONUT_RADIUS = 50;
+  private readonly CIRCUMFERENCE = 2 * Math.PI * 50; // ~314.159
 
   readonly paginatedAssets = computed(() => {
     const data = this.popoverData();
@@ -35,6 +38,11 @@ export class NodePopoverComponent {
     if (!data) return 0;
     return Math.ceil(data.details.assets.length / this.pageSize);
   });
+  
+  // Expose Math methods as component methods for template use
+  readonly ceil = Math.ceil;
+  readonly floor = Math.floor;
+  readonly min = Math.min;
 
   readonly currentPageRiskSummary = computed(() => {
     const assets = this.paginatedAssets();
@@ -75,58 +83,48 @@ export class NodePopoverComponent {
   }
 
   // Donut chart calculations
-  getCircumference(): number {
-    return 2 * Math.PI * 50; // ~314.159
+  private getCircumference(): number {
+    return this.CIRCUMFERENCE;
   }
 
   private getTotalRisks(): number {
     const summary = this.currentPageRiskSummary();
     return summary.critical + summary.high + summary.medium + summary.low;
   }
+  
+  private calculateDashArray(count: number, total: number): string {
+    if (total === 0 || count === 0) {
+      return `0 ${this.CIRCUMFERENCE}`;
+    }
+    
+    const circumference = this.getCircumference();
+    const segmentLength = (count / total) * circumference;
+    return `${segmentLength} ${circumference - segmentLength}`;
+  }
 
   // Get stroke-dasharray for each segment (segmentLength, remainingCircumference)
   getCriticalDashArray(): string {
     const summary = this.currentPageRiskSummary();
     const total = this.getTotalRisks();
-    if (total === 0 || summary.critical === 0) return '0 314.159';
-
-    const circumference = this.getCircumference();
-    const segmentLength = (summary.critical / total) * circumference;
-
-    return `${segmentLength} ${circumference - segmentLength}`;
+    return this.calculateDashArray(summary.critical, total);
   }
 
   getHighDashArray(): string {
     const summary = this.currentPageRiskSummary();
     const total = this.getTotalRisks();
-    if (total === 0 || summary.high === 0) return '0 314.159';
-
-    const circumference = this.getCircumference();
-    const segmentLength = (summary.high / total) * circumference;
-
-    return `${segmentLength} ${circumference - segmentLength}`;
+    return this.calculateDashArray(summary.high, total);
   }
 
   getMediumDashArray(): string {
     const summary = this.currentPageRiskSummary();
     const total = this.getTotalRisks();
-    if (total === 0 || summary.medium === 0) return '0 314.159';
-
-    const circumference = this.getCircumference();
-    const segmentLength = (summary.medium / total) * circumference;
-
-    return `${segmentLength} ${circumference - segmentLength}`;
+    return this.calculateDashArray(summary.medium, total);
   }
 
   getLowDashArray(): string {
     const summary = this.currentPageRiskSummary();
     const total = this.getTotalRisks();
-    if (total === 0 || summary.low === 0) return '0 314.159';
-
-    const circumference = this.getCircumference();
-    const segmentLength = (summary.low / total) * circumference;
-
-    return `${segmentLength} ${circumference - segmentLength}`;
+    return this.calculateDashArray(summary.low, total);
   }
 
   // Get stroke-dashoffset to position each segment
@@ -134,42 +132,40 @@ export class NodePopoverComponent {
     return 0;
   }
 
-  getHighDashOffset(): number {
-    const summary = this.currentPageRiskSummary();
+  private calculateDashOffset(...percentages: number[]): number {
     const total = this.getTotalRisks();
     if (total === 0) return 0;
 
     const circumference = this.getCircumference();
-    const criticalPercentage = summary.critical / total;
+    const cumulativePercentage = percentages.reduce((sum, pct) => sum + pct, 0);
+    return -(circumference * cumulativePercentage);
+  }
 
-    // High starts after Critical
-    return -(circumference * criticalPercentage);
+  getHighDashOffset(): number {
+    const summary = this.currentPageRiskSummary();
+    const total = this.getTotalRisks();
+    if (total === 0) return 0;
+    return this.calculateDashOffset(summary.critical / total);
   }
 
   getMediumDashOffset(): number {
     const summary = this.currentPageRiskSummary();
     const total = this.getTotalRisks();
     if (total === 0) return 0;
-
-    const circumference = this.getCircumference();
-    const criticalPercentage = summary.critical / total;
-    const highPercentage = summary.high / total;
-
-    // Medium starts after Critical + High
-    return -(circumference * (criticalPercentage + highPercentage));
+    return this.calculateDashOffset(
+      summary.critical / total,
+      summary.high / total
+    );
   }
 
   getLowDashOffset(): number {
     const summary = this.currentPageRiskSummary();
     const total = this.getTotalRisks();
     if (total === 0) return 0;
-
-    const circumference = this.getCircumference();
-    const criticalPercentage = summary.critical / total;
-    const highPercentage = summary.high / total;
-    const mediumPercentage = summary.medium / total;
-
-    // Low starts after Critical + High + Medium
-    return -(circumference * (criticalPercentage + highPercentage + mediumPercentage));
+    return this.calculateDashOffset(
+      summary.critical / total,
+      summary.high / total,
+      summary.medium / total
+    );
   }
 }

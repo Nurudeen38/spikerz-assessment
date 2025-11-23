@@ -1,22 +1,24 @@
-import { Component, signal, OnInit, HostListener } from '@angular/core';
+import { Component, signal, OnInit, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuItem, MENU_ITEMS, BOTTOM_MENU_ITEMS } from '../../constants/menu.constants';
+import { ResponsiveUtil } from '../../utils/responsive.util';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnInit {
-  isCollapsed = signal(false);
-  isHovering = signal(false); // Added this signal
-  activeMenuIndex = signal(3);
-  activeBottomMenuIndex = signal<number | null>(null);
+  readonly isCollapsed = signal(false);
+  readonly isHovering = signal(false);
+  readonly activeMenuIndex = signal(3);
+  readonly activeBottomMenuIndex = signal<number | null>(null);
 
-  menuItems: MenuItem[] = MENU_ITEMS;
-  bottomMenuItems: MenuItem[] = BOTTOM_MENU_ITEMS;
+  readonly menuItems: MenuItem[] = MENU_ITEMS;
+  readonly bottomMenuItems: MenuItem[] = BOTTOM_MENU_ITEMS;
 
   ngOnInit(): void {
     this.checkScreenSize();
@@ -28,8 +30,7 @@ export class SidebarComponent implements OnInit {
   }
 
   private checkScreenSize(): void {
-    const isMobile = window.innerWidth <= 768;
-    this.isCollapsed.set(isMobile);
+    this.isCollapsed.set(ResponsiveUtil.isMobile());
   }
 
   getIconPath(iconName: string): string {

@@ -2,17 +2,61 @@
 
 // Tooltip container
 div {
-    max-width: 400px;
-    animation: tooltipFadeIn 0.2s ease-out;
+    max-width: var(--tooltip-max-width);
+    animation: tooltipFadeIn var(--duration-normal) ease-out;
   }
   
   @keyframes tooltipFadeIn {
     from {
       opacity: 0;
-      transform: translateY(-4px);
+      transform: translateY(calc(var(--spacing-xs) * -1));
     }
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
+
+  .tooltip-container {
+  max-width: var(--tooltip-max-width);
+  min-width: 220px;
+  box-shadow: var(--shadow-card-md);
+  border-radius: 12px;
+  padding: 0.75rem; // fallback if utility classes missing
+  pointer-events: auto;
+  overflow: hidden;
+  animation: tooltipFadeIn var(--duration-normal) ease-out;
+  will-change: transform, opacity;
+}
+
+.highlight-chip {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.25rem;
+  line-height: 1;
+}
+
+/* Slight fade/slide in */
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ensure icons and text align tightly */
+.tooltip-container svg {
+  display: block;
+}
+
+/* Small adjustments for extreme mobile positions */
+@media (max-width: 480px) {
+  .tooltip-container {
+    min-width: 200px;
+    padding: 0.5rem;
+  }
+}

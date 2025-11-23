@@ -1,14 +1,15 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CollapsibleCard, COLLAPSIBLE_CARDS } from '../../constants/cards.constants';
 
 @Component({
   selector: 'app-collapsible-cards',
   standalone: true,
   templateUrl: './collapsible-cards.component.html',
-  styleUrls: ['./collapsible-cards.component.scss']
+  styleUrls: ['./collapsible-cards.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CollapsibleCardsComponent {
-  cards = signal<CollapsibleCard[]>(
+  readonly cards = signal<CollapsibleCard[]>(
     COLLAPSIBLE_CARDS.map((card, index) => ({
       ...card,
       expanded: index === 0 // First card expanded by default
