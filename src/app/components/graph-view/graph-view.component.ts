@@ -157,13 +157,12 @@ export class GraphViewComponent implements OnDestroy {
 
     const svgRect = this.svgCanvas?.nativeElement.getBoundingClientRect();
     const containerWidth = svgRect?.width ?? 649;
-    const containerHeight = svgRect?.height ?? 250;
     const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1024;
     const isMobile = screenWidth < 768;
 
     let x = (node.x ?? 0) + 50;
     // Position tooltip below the node (node center + radius + text height + gap)
-    let y = (node.y ?? 0) + 50;
+    const y = (node.y ?? 0) + 50;
 
     if (isMobile) {
       if (node.id === '4' || node.id === '5') {

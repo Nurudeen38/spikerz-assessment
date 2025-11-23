@@ -1,31 +1,30 @@
 @if (popoverData()) {
   <div class="w-full">
-    <!-- Title: tuned font-size/weight/color to match design -->
-    <h2 class="text-lg md:text-xl leading-tight font-semibold tracking-tight text-gray-600 my-5">Lorem Ipsum Dolor Sit</h2>
+    <h2 class=" text-xl leading-md font-bold tracking-1 capitalize text-success my-5">Lorem Ipsum Dolor Sit</h2>
 
     <div class="flex flex-col lg:flex-row gap-4 md:gap-5 w-full">
       <!-- Asset Risk Table -->
-      <div class="overflow-hidden basis-1/2 rounded-md border border-gray-50 bg-white shadow-card-sm flex flex-col">
+      <div class="overflow-hidden basis-1/2   rounded-md border border-gray-50 bg-white shadow-card-sm flex flex-col">
         <div class="px-6 md:px-8 pt-3 pb-2 border-b border-gray-50 flex-shrink-0">
           <div class="flex items-center justify-between gap-8">
-            <h3 class="text-xs leading-tight font-medium tracking-tight text-gray-400">Asset</h3>
-            <h3 class="text-xs leading-tight font-medium tracking-tight text-gray-400">Contextual Risk</h3>
+            <h3 class=" text-xss leading-sm font-normal tracking-400 text-gray-400">Asset</h3>
+            <h3 class=" text-xss leading-sm font-normal tracking-400 text-gray-400">Contextual Risk</h3>
           </div>
         </div>
           
         <div class="divide-y flex-shrink-0 lg:flex-1 lg:overflow-y-auto divide-gray-50">
           @for (asset of paginatedAssets(); track asset.id) {
-            <div class="flex items-center justify-between px-6 md:px-8 py-3 hover:bg-gray-50 transition-colors gap-8">
+            <div class="flex items-center justify-between px-6 md:px-8 py-2 hover:bg-gray-50 transition-colors gap-8">
               <div class="flex items-center gap-3 flex-1 min-w-0">
                 <img 
                   src="assets/icons/server.svg" 
                   alt="server" 
                   class="flex-shrink-0 w-[45px] h-[45px] min-w-[45px] min-h-[45px]">
                 <div class="min-w-0 flex-1 overflow-hidden">
-                  <div class="truncate text-sm leading-[18px] font-semibold tracking-normal capitalize text-gray-700">
+                  <div class="truncate  text-xss leading-[13.5px] font-semibold tracking-normal capitalize text-gray-700">
                     {{ asset.name }}
                   </div>
-                  <div class="truncate text-xs leading-[13px] font-medium tracking-normal text-gray-500 mt-1">
+                  <div class="truncate  text-[9.45px] leading-[10.13px] font-medium tracking-normal text-gray-500 mt-1">
                     {{ asset.ipAddress }}
                   </div>
                 </div>
@@ -35,7 +34,7 @@
                 'bg-orange-100 text-orange-600': asset.riskLevel === 'High',
                 'bg-yellow-100 text-yellow-600': asset.riskLevel === 'Medium',
                 'bg-emerald-100 text-emerald-600': asset.riskLevel === 'Low'
-              }" class="risk-badge whitespace-nowrap flex-shrink-0">
+              }" class="px-3 py-1 rounded-full whitespace-nowrap flex-shrink-0  text-base-md leading-md font-bold tracking-1 capitalize">
                 {{ asset.riskLevel }}
               </span>
             </div>
@@ -66,34 +65,34 @@
       </div>
 
      <!-- Contextual Risk Donut - Single component for all screens -->
-<div class="basis-1/2 rounded-[20px] border-[1.1px] border-gray-50 bg-white shadow-card-md p-3 lg:px-[30px] lg:py-2.5 flex flex-col">
-  <h3 class="text-sm leading-6 font-medium tracking-normal text-gray-500 mb-3">Contextual Risk</h3>
+<div class="basis-1/2   rounded-[20px] border-[1.1px] border-gray-50 bg-white shadow-card-md p-3 lg:px-[30px] lg:py-2.5 flex flex-col">
+  <h3 class=" text-lg leading-7 font-medium tracking-normal text-gray-500 mb-3">Contextual Risk</h3>
   
   <div class="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between gap-3 lg:gap-4 w-full lg:flex-1">
     <!-- Legend - Uses justify-between on desktop to fill height -->
     <div class="flex flex-col items-start w-full lg:w-auto gap-1.5">
       <div class="flex items-center gap-3 lg:pt-0.5">
         <div class="w-3 h-3 rounded-full flex-shrink-0 bg-critical-dark"></div>
-        <span class="text-sm leading-[100%] tracking-normal capitalize text-[#383874]">
-          <span class="font-semibold">{{ currentPageRiskSummary().critical }}</span><span class="font-normal"> Critical</span>
+        <span class=" text-base-md leading-[100%] tracking-normal capitalize text-[#383874]">
+          <span class="font-bold">{{ currentPageRiskSummary().critical }}</span><span class="font-normal"> Critical</span>
         </span>
       </div>
       <div class="flex items-center gap-3 lg:pt-3.5">
         <div class="w-3 h-3 rounded-full flex-shrink-0 bg-warning"></div>
-        <span class="text-sm leading-[100%] tracking-normal capitalize text-[#383874]">
-          <span class="font-semibold">{{ currentPageRiskSummary().high }}</span><span class="font-normal"> High</span>
+        <span class=" text-base-md leading-[100%] tracking-normal capitalize text-[#383874]">
+          <span class="font-bold">{{ currentPageRiskSummary().high }}</span><span class="font-normal"> High</span>
         </span>
       </div>
       <div class="flex items-center gap-3 lg:pt-3.5">
         <div class="w-3 h-3 rounded-full bg-yellow-500 flex-shrink-0"></div>
-        <span class="text-sm leading-[100%] tracking-normal capitalize text-[#383874]">
-          <span class="font-semibold">{{ currentPageRiskSummary().medium }}</span><span class="font-normal"> Medium</span>
+        <span class=" text-base-md leading-[100%] tracking-normal capitalize text-[#383874]">
+          <span class="font-bold">{{ currentPageRiskSummary().medium }}</span><span class="font-normal"> Medium</span>
         </span>
       </div>
       <div class="flex items-center gap-3 lg:pt-3.5">
         <div class="w-3 h-3 rounded-full flex-shrink-0 bg-success"></div>
-        <span class="text-sm leading-[100%] tracking-normal capitalize text-[#383874]">
-          <span class="font-semibold">{{ currentPageRiskSummary().low }}</span><span class="font-normal"> Low</span>
+        <span class=" text-base-md leading-[100%] tracking-normal capitalize text-[#383874]">
+          <span class="font-bold">{{ currentPageRiskSummary().low }}</span><span class="font-normal"> Low</span>
         </span>
       </div>
     </div>
@@ -119,7 +118,7 @@
         </svg>
         
         <div class="absolute -translate-y-2 inset-0 flex flex-col items-center justify-center">
-          <span class="text-2xl lg:text-2xl xl:text-3xl leading-7 font-semibold text-[#656575]">{{ currentPageRiskSummary().critical }}</span>
+          <span class="text-3xl lg:text-2xl xl:text-3xl  leading-7 font-semibold text-[#656575]">{{ currentPageRiskSummary().critical }}</span>
         </div>
       </div>
     </div>
