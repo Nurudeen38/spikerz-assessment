@@ -40,10 +40,10 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
     contentLines: [
       {
         parts: [
-          { text: 'Lorem 1.2.3.4', color: 'blue' },
+          { text: 'Lorem 1.2.3.4', color: 'purple' },
           'Loremipsum',
-          { text: 'Lorem 1.2.3.4', color: 'blue' },
-          { text: 'Lorem 1.2.3.4', color: 'blue' },
+          { text: 'Lorem 1.2.3.4', color: 'purple' },
+          { text: 'Lorem 1.2.3.4', color: 'purple' },
         ],
       },
     ],
@@ -58,10 +58,10 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
     contentLines: [
       {
         parts: [
-          { text: 'Lorem 1.2.3.4', color: 'blue' },
+          { text: 'Lorem 1.2.3.4', color: 'purple' },
           'Loremipsum',
-          { text: 'Lorem 1.2.3.4', color: 'blue' },
-          { text: 'Lorem 1.2.3.4', color: 'blue' },
+          { text: 'Lorem 1.2.3.4', color: 'purple' },
+          { text: 'Lorem 1.2.3.4', color: 'purple' },
         ],
       },
     ],

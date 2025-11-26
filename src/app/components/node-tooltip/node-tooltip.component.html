@@ -122,18 +122,18 @@
       let-classNormal="classNormal"
       let-highlightSuffix="highlightSuffix"
     >
-      <div class="space-y-1 mt-1" *ngIf="lines?.length">
+      <div class="space-y-2 mt-1 flex gap-3" *ngIf="lines?.length">
         <div *ngFor="let line of lines" class="text-base-md text-gray-700">
           <ng-container *ngIf="isHighlightedText(line); else plainLine">
             <ng-container *ngFor="let part of line.parts">
               <ng-container *ngIf="isTextHighlight(part); else normalPart">
-                <span
+                <p
                   [class]="
                     getHighlightClass(part.color) +
                     ' ' +
-                    (highlightSuffix || 'highlight-chip mr-1 font-bold')
+                    (highlightSuffix || 'highlight-chip mr-1 mb-2 font-bold')
                   "
-                  >{{ part.text }}</span
+                  >{{ part.text }}</p
                 >
               </ng-container>
               <ng-template #normalPart>
@@ -235,7 +235,7 @@
             context: {
               value: data.documentTitle,
               classes: 'text-gray-700 text-base-md-md font-bold',
-              highlightSuffix: 'highlight-chip mr-1 font-bold',
+              highlightSuffix: 'highlight-chip mr-1 font-bold my-2',
             }
           "
         ></ng-container>
@@ -246,7 +246,7 @@
           contentLines;
           context: {
             lines: data.contentLines,
-            classNormal: 'text-gray-700 font-semibold text-base-md-md mr-1',
+            classNormal: 'text-gray-700 font-semibold text-base-md mr-1',
             highlightSuffix: 'highlight-chip mr-1 font-bold',
           }
         "
