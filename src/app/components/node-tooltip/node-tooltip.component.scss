@@ -19,7 +19,7 @@ div {
 
   .tooltip-container {
   max-width: var(--tooltip-max-width);
-  min-width: 220px;
+  min-width: 240px;
   box-shadow: var(--shadow-card-md);
   border-radius: 12px;
   padding: 0.75rem; // fallback if utility classes missing

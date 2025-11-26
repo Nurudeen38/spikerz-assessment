@@ -1,10 +1,9 @@
 <ng-container *ngIf="data">
   <div
-    class="tooltip-container absolute bg-white rounded-lg shadow-card-md border border-gray-100 p-4 z-50 pointer-events-auto"
+    class="tooltip-container absolute bg-white rounded-lg shadow-card-md border  min-w-[360px] md:min-w-[600px] border-gray-100 p-4 z-50 pointer-events-auto"
     [style.left.px]="position.x"
     [style.top.px]="position.y"
   >
-    <!-- Reusable templates -->
     <ng-template #renderText let-value let-classes="classes" let-highlightSuffix="highlightSuffix">
       <ng-container *ngIf="isHighlightedText(value); else plainText">
         <ng-container *ngFor="let part of value.parts">
@@ -122,8 +121,8 @@
       let-classNormal="classNormal"
       let-highlightSuffix="highlightSuffix"
     >
-      <div class="space-y-2 mt-1 flex gap-3" *ngIf="lines?.length">
-        <div *ngFor="let line of lines" class="text-base-md text-gray-700">
+      <div class=" flex items-center min-w-full" *ngIf="lines?.length">
+        <div *ngFor="let line of lines" class=" text-base-md text-gray-700  space-y-1 inline-block">
           <ng-container *ngIf="isHighlightedText(line); else plainLine">
             <ng-container *ngFor="let part of line.parts">
               <ng-container *ngIf="isTextHighlight(part); else normalPart">
@@ -131,18 +130,18 @@
                   [class]="
                     getHighlightClass(part.color) +
                     ' ' +
-                    (highlightSuffix || 'highlight-chip mr-1 mb-2 font-bold')
+                    (highlightSuffix || 'highlight-chip mr-1  font-bold')
                   "
                   >{{ part.text }}</p
                 >
               </ng-container>
               <ng-template #normalPart>
-                <span [ngClass]="classNormal || 'text-gray-700 font-bold'">{{ part }}</span>
+                <p [ngClass]="classNormal || 'text-gray-700 font-bold  inline-block align-sub mx-2'">{{ part }}</p>
               </ng-template>
             </ng-container>
           </ng-container>
           <ng-template #plainLine>
-            <span [ngClass]="classNormal || 'text-gray-700 font-bold'">{{ line }}</span>
+            <p [ngClass]="classNormal || 'text-gray-700 font-bold inline-block align-sub mx-2'">{{ line }}</p>
           </ng-template>
         </div>
       </div>
@@ -180,10 +179,8 @@
       </div>
     </ng-template>
 
-    <!-- Main type-based rendering (reusable building blocks used) -->
-    <!-- Email -->
-    <div *ngIf="data.type === 'email'" class="space-y-1 min-w-[260px] md:min-w-[300px]">
-      <h3 *ngIf="data.title" class="text-base-md font-bold leading-tight">
+    <div *ngIf="data.type === 'email'" class="space-y-1">
+      <h3 *ngIf="data.title" class="text-base-md font-bold">
         <ng-container
           *ngTemplateOutlet="
             renderText;
@@ -215,7 +212,7 @@
     </div>
 
     <!-- Server with IP -->
-    <div *ngIf="data.type === 'server-with-ip'" class="space-y-1 min-w-[260px] md:min-w-[360px]">
+    <div *ngIf="data.type === 'server-with-ip'">
       <ng-container
         *ngTemplateOutlet="
           serverHeader;
@@ -235,7 +232,7 @@
             context: {
               value: data.documentTitle,
               classes: 'text-gray-700 text-base-md-md font-bold',
-              highlightSuffix: 'highlight-chip mr-1 font-bold my-2',
+              highlightSuffix: 'highlight-chip  font-bold mr-2',
             }
           "
         ></ng-container>
@@ -246,7 +243,7 @@
           contentLines;
           context: {
             lines: data.contentLines,
-            classNormal: 'text-gray-700 font-semibold text-base-md mr-1',
+            classNormal: 'text-gray-700 font-semibold text-base-md align-sub inline-block mr-2',
             highlightSuffix: 'highlight-chip mr-1 font-bold',
           }
         "
@@ -254,7 +251,7 @@
     </div>
 
     <!-- Simple Server -->
-    <div *ngIf="data.type === 'server-simple'" class="space-y-1 min-w-[260px] md:min-w-[320px]">
+    <div *ngIf="data.type === 'server-simple'" class="space-y-1">
       <ng-container
         *ngTemplateOutlet="
           serverHeader;
@@ -279,7 +276,7 @@
     </div>
 
     <!-- Branch Server -->
-    <div *ngIf="data.type === 'branch-server'" class="space-y-1 min-w-[300px] md:min-w-[240px]">
+    <div *ngIf="data.type === 'branch-server'" class="space-y-1 ">
       <ng-container
         *ngTemplateOutlet="
           serverHeader;
@@ -296,7 +293,7 @@
         <ng-container
           *ngTemplateOutlet="
             documentLine;
-            context: { value: data.documentTitle, highlightSuffix: 'highlight-chip mr-1' }
+            context: { value: data.documentTitle, highlightSuffix: 'highlight-chip mr-1 inline-block' }
           "
         ></ng-container>
       </ng-container>
@@ -304,7 +301,7 @@
       <ng-container
         *ngTemplateOutlet="
           contentLines;
-          context: { lines: data.contentLines, highlightSuffix: 'highlight-chip mr-1' }
+          context: { lines: data.contentLines, highlightSuffix: 'highlight-chip mr-1 inline-block' }
         "
       ></ng-container>
     </div>

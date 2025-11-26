@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy, OnChanges } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NodeTooltipData, HighlightedText, TextHighlight } from '../../constants/tooltip.constants';
 
@@ -10,14 +10,9 @@ import { NodeTooltipData, HighlightedText, TextHighlight } from '../../constants
   styleUrls: ['./node-tooltip.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NodeTooltipComponent  implements OnChanges {
+export class NodeTooltipComponent {
   @Input() data: NodeTooltipData | null = null;
   @Input() position: { x: number; y: number } = { x: 0, y: 0 };
-
-
-  ngOnChanges(){
-    console.log(this.data,this.position);
-  }
 
   isHighlightedText(value: string | HighlightedText | undefined): value is HighlightedText {
     return value !== undefined && typeof value === 'object' && 'parts' in value;
@@ -36,7 +31,6 @@ export class NodeTooltipComponent  implements OnChanges {
       green: 'bg-emerald-50 text-emerald-600',
     };
     const base = colorMap[color] || 'bg-gray-100 text-gray-800';
-    
     return `${base} py-2 px-1 rounded-xs font-semibold text-sm inline-block`;
   }
 }
