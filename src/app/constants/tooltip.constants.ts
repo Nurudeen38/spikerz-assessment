@@ -30,27 +30,27 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
     gridNumbers: ['1.2.3.4', '1.2.3.4', '1.2.3.4', '1.2.3.4', '1.2.3.4', '1.2.3.4'],
     documentTitle: {
       parts: [
-        'Lorem: ',
-        { text: '1.2.3.4', color: 'purple' }
+        { text: 'Lorem: 1.2.3.4', color: 'purple' }
       ]
     },
   },
   '2': {
     type: 'server-with-ip',
-    serverName: 'Loremipsumdolorsit',
-    ipAddress: '192.168.1.1',
+    serverName: 'Loremipsu',
     hasRedX: true,
     documentTitle: {
       parts: [
-        'Lorem: ',
-        { text: 'Lorem "Ipsum"', color: 'yellow' }
+        'Lorem: Loremipsum Loremipsum',
+        { text: '1.2.3.4', color: 'purple' }
       ]
     },
     contentLines: [
       {
         parts: [
-          'Loremipsum ',
-          { text: 'Lorem 1234,5678', color: 'blue' }
+          { text: 'Lorem 1.2.3.4', color: 'blue' },
+          'Loremipsum',
+          { text: 'Lorem 1.2.3.4', color: 'blue' },
+          { text: 'Lorem 1.2.3.4', color: 'blue' }
         ]
       }
     ],
@@ -62,15 +62,17 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
     hasRedX: true,
     documentTitle: {
       parts: [
-        'Lorem: ',
-        { text: 'Lorem "Ipsum"', color: 'yellow' }
+        'Lorem: Loremipsum Loremipsum',
+        { text: '1.2.3.4', color: 'purple' }
       ]
     },
     contentLines: [
       {
         parts: [
-          'Loremipsum ',
-          { text: 'Lorem 1234,5678', color: 'blue' }
+          { text: 'Lorem 1.2.3.4', color: 'blue' },
+          'Loremipsum',
+          { text: 'Lorem 1.2.3.4', color: 'blue' },
+          { text: 'Lorem 1.2.3.4', color: 'blue' }
         ]
       }
     ],

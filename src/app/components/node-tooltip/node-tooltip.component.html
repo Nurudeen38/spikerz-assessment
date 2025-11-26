@@ -6,29 +6,29 @@
       
       <!-- Node 1: Email Type -->
       @if (data.type === 'email') {
-        <div class="space-y-3 min-w-[260px] md:min-w-[320px]">
+        <div class="space-y-3 min-w-[260px] md:min-w-[300px]">
           <!-- Red Header with Highlight -->
           @if (data.title) {
-            <h3 class="text-sm font-semibold leading-tight">
+            <h3 class="text-sm font-bold leading-tight">
               @if (isHighlightedText(data.title)) {
                 @for (part of data.title.parts; track $index) {
                   @if (isTextHighlight(part)) {
-                    <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
+                    <span [class]="getHighlightClass(part.color) + ' highlight-chip pr-8 mr-1 text-base-md font-bold'">{{ part.text }}</span>
                   } @else {
-                    <span class="text-gray-800">{{ part }}</span>
+                    <span class="text-gray-800 font-bold">{{ part }}</span>
                   }
                 }
               } @else {
-                <span class="text-red-600">{{ data.title }}</span>
+                <p class="text-red-600 font-bold pr-8">{{ data.title }}</p>
               }
             </h3>
           }
           
           <!-- Grid of Numbers with Red Highlight -->
           @if (data.gridNumbers) {
-            <div class="grid grid-cols-3 gap-2">
+            <div class="grid grid-cols-3 gap-2" [ngClass] ='{"ml-8" : "data.gridNumbers.length === 6"}'>
               @for (number of data.gridNumbers; track $index) {
-                <span class="text-xs font-medium bg-red-100 text-red-700 px-2 py-1 rounded inline-block">{{ number }}</span>
+                <span class="text-xs  bg-red-100 text-red-700 pl-2  pr-12 py-1 rounded inline-block font-bold">{{ number }}</span>
               }
             </div>
           }
@@ -39,13 +39,13 @@
               @if (isHighlightedText(data.documentTitle)) {
                 @for (part of data.documentTitle.parts; track $index) {
                   @if (isTextHighlight(part)) {
-                    <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
+                    <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1 font-bold text-lg'">{{ part.text }}</span>
                   } @else {
-                    <span class="text-gray-700">{{ part }}</span>
+                    <span class="text-gray-700 font-bold">{{ part }}</span>
                   }
                 }
               } @else {
-                <span class="text-blue-600">{{ data.documentTitle }}</span>
+                <span class="text-blue-600 font-bold">{{ data.documentTitle }}</span>
               }
             </div>
           }
@@ -74,9 +74,9 @@
                 }
               </div>
               <div class="flex-1 min-w-0">
-                <div class="text-sm font-medium text-gray-900 truncate">{{ data.serverName }}</div>
+                <div class="text-sm font-bold text-gray-900 truncat e">{{ data.serverName }}</div>
                 @if (data.ipAddress) {
-                  <div class="text-xs text-gray-500 truncate">{{ data.ipAddress }}</div>
+                  <p class="text-xs text-gray-500 truncate font-bold">{{ data.ipAddress }}</p>
                 }
               </div>
             </div>
@@ -93,9 +93,9 @@
                 @if (isHighlightedText(data.documentTitle)) {
                   @for (part of data.documentTitle.parts; track $index) {
                     @if (isTextHighlight(part)) {
-                      <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
+                      <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1 font-bold'">{{ part.text }}</span>
                     } @else {
-                      <span class="text-gray-700">{{ part }}</span>
+                      <span class="text-gray-700 font-bold">{{ part }}</span>
                     }
                   }
                 } @else {
@@ -113,9 +113,9 @@
                   @if (isHighlightedText(line)) {
                     @for (part of line.parts; track $index) {
                       @if (isTextHighlight(part)) {
-                        <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
+                        <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1 font-bold'">{{ part.text }}</span>
                       } @else {
-                        <span class="text-gray-700">{{ part }}</span>
+                        <span class="text-gray-700 font-bold">{{ part }}</span>
                       }
                     }
                   } @else {
@@ -156,9 +156,9 @@
                 @if (isHighlightedText(data.documentTitle)) {
                   @for (part of data.documentTitle.parts; track $index) {
                     @if (isTextHighlight(part)) {
-                      <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
+                      <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1 font-bold'">{{ part.text }}</span>
                     } @else {
-                      <span class="text-gray-700">{{ part }}</span>
+                      <span class="text-gray-700 font-bold">{{ part }}</span>
                     }
                   }
                 } @else {
@@ -176,9 +176,9 @@
                   @if (isHighlightedText(line)) {
                     @for (part of line.parts; track $index) {
                       @if (isTextHighlight(part)) {
-                        <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
+                        <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1 font-bold'">{{ part.text }}</span>
                       } @else {
-                        <span class="text-gray-700">{{ part }}</span>
+                        <span class="text-gray-700 font-bold">{{ part }}</span>
                       }
                     }
                   } @else {
