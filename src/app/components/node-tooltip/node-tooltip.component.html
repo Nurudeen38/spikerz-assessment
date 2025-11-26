@@ -15,7 +15,7 @@
                   @if (isTextHighlight(part)) {
                     <span [class]="getHighlightClass(part.color) + ' highlight-chip pr-8 mr-1 text-base-md font-bold'">{{ part.text }}</span>
                   } @else {
-                    <span class="text-gray-800 font-bold">{{ part }}</span>
+                    <span class="text-gray-800 font-bold  text-base">{{ part }}</span>
                   }
                 }
               } @else {
@@ -74,9 +74,9 @@
                 }
               </div>
               <div class="flex-1 min-w-0">
-                <div class="text-sm font-bold text-gray-900 truncat e">{{ data.serverName }}</div>
+                <div class="text-base font-bold text-gray-800  truncate">{{ data.serverName }}</div>
                 @if (data.ipAddress) {
-                  <p class="text-xs text-gray-500 truncate font-bold">{{ data.ipAddress }}</p>
+                  <p class="text-base text-gray-500 truncate font-bold">{{ data.ipAddress }}</p>
                 }
               </div>
             </div>
@@ -95,7 +95,7 @@
                     @if (isTextHighlight(part)) {
                       <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1 font-bold'">{{ part.text }}</span>
                     } @else {
-                      <span class="text-gray-700 font-bold">{{ part }}</span>
+                      <span class="text-gray-700 text-base-md font-bold mr-1">{{ part }}</span>
                     }
                   }
                 } @else {
@@ -115,7 +115,7 @@
                       @if (isTextHighlight(part)) {
                         <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1 font-bold'">{{ part.text }}</span>
                       } @else {
-                        <span class="text-gray-700 font-bold">{{ part }}</span>
+                        <span class="text-gray-700 font-semibold text-base-md mr-1">{{ part }}</span>
                       }
                     }
                   } @else {
@@ -204,13 +204,13 @@
                   <line x1="10" y1="12" x2="10.01" y2="12"/>
                 </svg>
               </div>
-              <span class="text-sm font-medium text-gray-900 truncate">{{ data.serverName }}</span>
+              <span class="text-base font-medium text-gray-900 truncate">{{ data.serverName }}</span>
             </div>
           }
           
           <!-- Document Info with Multiple Highlights -->
           @if (data.documentTitle) {
-            <div class="flex items-start gap-2 mt-1">
+            <div class="flex items-start gap-1 mt-1">
               <svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                 <polyline points="14 2 14 8 20 8"/>
@@ -233,7 +233,7 @@
           
           <!-- Multiple Content Lines with Various Highlights -->
           @if (data.contentLines) {
-            <div class="space-y-1 mt-1">
+            <div class=" mt-1">
               @for (line of data.contentLines; track $index) {
                 <div class="text-xs text-gray-700">
                   @if (isHighlightedText(line)) {

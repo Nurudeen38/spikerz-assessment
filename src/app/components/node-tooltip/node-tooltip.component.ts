@@ -29,14 +29,14 @@ export class NodeTooltipComponent {
 
   getHighlightClass(color: string): string {
     const colorMap: Record<string, string> = {
-      red: 'bg-red-100 text-red-700',
+      red: 'bg-red-50 text-red-600',
       purple: 'bg-purple-50 text-purple-600',
-      yellow: 'bg-yellow-100 text-yellow-700',
-      blue: 'bg-blue-100 text-blue-700',
-      green: 'bg-emerald-100 text-emerald-700',
+      yellow: 'bg-yellow-50 text-yellow-600',
+      blue: 'bg-blue-50 text-blue-600',
+      green: 'bg-emerald-50 text-emerald-600',
     };
     const base = colorMap[color] || 'bg-gray-100 text-gray-800';
     
-    return `${base} py-2 px-1  m-1 rounded-xs font-semibold text-sm inline-block`;
+    return `${base} py-2 px-1 rounded-xs font-semibold text-sm inline-block`;
   }
 }

@@ -58,7 +58,6 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
   '3': {
     type: 'server-with-ip',
     serverName: 'Loremipsumdolorsit002',
-    ipAddress: '192.168.1.2',
     hasRedX: true,
     documentTitle: {
       parts: [
@@ -81,20 +80,18 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
     type: 'server-simple',
     serverName: 'Loremipsu',
     hasRedX: false,
+        ipAddress: '192.168.1.2',
     documentTitle: {
       parts: [
-        'Lorem: Loremipsum Loremipsum ',
-        { text: '1.2.3.4', color: 'purple' }
+        'Lorem:',
+        { text: 'Lorem "Ipsum"', color: 'yellow' }
       ]
     },
     contentLines: [
       {
         parts: [
-          { text: '1.2.3.4', color: 'purple' },
           ' Loremipsum ',
-          { text: '1.2.3.4', color: 'purple' },
-          ' ',
-          { text: '1.2.3.4', color: 'purple' }
+          { text: 'Lorem 1234, 5678', color: 'purple' },
         ]
       }
     ],
@@ -102,44 +99,19 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
   '5': {
     type: 'branch-server',
     serverName: 'Loremipsum',
-    hasRedX: false,
+    hasRedX: true,
+    ipAddress: '192.168.1.2',
     documentTitle: {
       parts: [
-        'Lorem: ',
-        { text: 'Lorem "Ipsum"', color: 'yellow' },
-        ' ',
-        { text: 'Lorem', color: 'green' },
-        ' Loremipsum Loremipsum'
+        'Lorem:',
+        { text: 'Lorem "Ipsum"', color: 'yellow' }
       ]
     },
     contentLines: [
       {
         parts: [
-          { text: '1.2.3.4', color: 'purple' },
           ' Loremipsum ',
-          { text: '1.2.3.4', color: 'purple' },
-          ' ',
-          { text: '1.2.3.4', color: 'purple' },
-          ' ',
-          { text: 'Lorem 1234,5678', color: 'blue' }
-        ]
-      },
-      {
-        parts: [
-          'Lorem: ',
-          { text: 'Lorem "Ipsum"', color: 'yellow' },
-          ' Loremipsum Loremipsum'
-        ]
-      },
-      {
-        parts: [
-          { text: '1.2.3.4', color: 'purple' },
-          ' ',
-          { text: '1.2.3.4', color: 'purple' },
-          ' Loremipsum Loremipsum ',
-          { text: '1.2.3.4', color: 'purple' },
-          ' ',
-          { text: '1.2.3.4', color: 'purple' }
+          { text: 'Lorem 1234, 5678', color: 'purple' },
         ]
       }
     ],
