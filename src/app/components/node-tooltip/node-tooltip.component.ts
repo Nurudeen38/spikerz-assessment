@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NodeTooltipData, HighlightedText, TextHighlight } from '../../constants/tooltip.constants';
 
@@ -10,12 +10,12 @@ import { NodeTooltipData, HighlightedText, TextHighlight } from '../../constants
   styleUrls: ['./node-tooltip.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NodeTooltipComponent {
+export class NodeTooltipComponent  implements OnChanges {
   @Input() data: NodeTooltipData | null = null;
   @Input() position: { x: number; y: number } = { x: 0, y: 0 };
 
 
-  constructor(){
+  ngOnChanges(){
     console.log(this.data,this.position);
   }
 

@@ -69,8 +69,8 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
   '4': {
     type: 'server-simple',
     serverName: 'Loremipsu',
-    hasRedX: false,
-    ipAddress: '192.168.1.2',
+    hasRedX: true,
+    ipAddress: '192.168.1.1',
     documentTitle: {
       parts: ['Lorem:', { text: 'Lorem "Ipsum"', color: 'yellow' }],
     },
