@@ -107,7 +107,7 @@
               renderText;
               context: {
                 $implicit: value,
-                classes: classes || 'text-gray-700',
+                classes: classes || 'text-gray-700 font-bold mr-2',
                 highlightSuffix: highlightSuffix,
               }
             "
@@ -163,8 +163,8 @@
     </ng-template>
 
     <ng-template #badges let-bads="bads">
-      <div *ngIf="bads?.length" class="flex items-center gap-2 mt-2">
-        <div *ngFor="let badge of bads" class="flex items-center gap-2">
+      <div *ngIf="bads?.length" class="flex items-center gap-2">
+        <div *ngFor="let badge of bads" class="flex items-center gap-2 m-2">
           <div
             [ngClass]="{
               'bg-red-500': badge.color === 'red',
