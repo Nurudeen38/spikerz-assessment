@@ -76,7 +76,7 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
     },
     contentLines: [
       {
-        parts: [' Loremipsum ', { text: 'Lorem 1234, 5678', color: 'purple' }],
+        parts: [' Loremipsum ', { text: 'Lorem 1234, 5678', color: 'blue' }],
       },
     ],
   },
@@ -90,7 +90,7 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
     },
     contentLines: [
       {
-        parts: [' Loremipsum ', { text: 'Lorem 1234, 5678', color: 'purple' }],
+        parts: [' Loremipsum ', { text: 'Lorem 1234, 5678', color: 'blue' }],
       },
     ],
   },
