@@ -1,316 +1,350 @@
-@if (data) {
-    <div 
-      class="tooltip-container absolute bg-white rounded-lg shadow-card-md border border-gray-100 p-4 z-50 pointer-events-auto"
-      [style.left.px]="position.x"
-      [style.top.px]="position.y">
-      
-      <!-- Node 1: Email Type -->
-      @if (data.type === 'email') {
-        <div class="space-y-3 min-w-[260px] md:min-w-[300px]">
-          <!-- Red Header with Highlight -->
-          @if (data.title) {
-            <h3 class="text-sm font-bold leading-tight">
-              @if (isHighlightedText(data.title)) {
-                @for (part of data.title.parts; track $index) {
-                  @if (isTextHighlight(part)) {
-                    <span [class]="getHighlightClass(part.color) + ' highlight-chip pr-8 mr-1 text-base-md font-bold'">{{ part.text }}</span>
-                  } @else {
-                    <span class="text-gray-800 font-bold  text-base">{{ part }}</span>
-                  }
-                }
-              } @else {
-                <p class="text-red-600 font-bold pr-8">{{ data.title }}</p>
-              }
-            </h3>
-          }
-          
-          <!-- Grid of Numbers with Red Highlight -->
-          @if (data.gridNumbers) {
-            <div class="grid grid-cols-3 gap-2" [ngClass] ='{"ml-8" : "data.gridNumbers.length === 6"}'>
-              @for (number of data.gridNumbers; track $index) {
-                <span class="text-xs  bg-red-100 text-red-700 pl-2  pr-12 py-1 rounded inline-block font-bold">{{ number }}</span>
-              }
-            </div>
-          }
-          
-          <!-- Bottom Text with Purple Highlight -->
-          @if (data.documentTitle) {
-            <div class="text-xs font-medium">
-              @if (isHighlightedText(data.documentTitle)) {
-                @for (part of data.documentTitle.parts; track $index) {
-                  @if (isTextHighlight(part)) {
-                    <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1 font-bold text-lg'">{{ part.text }}</span>
-                  } @else {
-                    <span class="text-gray-700 font-bold">{{ part }}</span>
-                  }
-                }
-              } @else {
-                <span class="text-blue-600 font-bold">{{ data.documentTitle }}</span>
-              }
-            </div>
-          }
+<ng-container *ngIf="data">
+  <div
+    class="tooltip-container absolute bg-white rounded-lg shadow-card-md border border-gray-100 p-4 z-50 pointer-events-auto"
+    [style.left.px]="position.x"
+    [style.top.px]="position.y"
+  >
+    <!-- Reusable templates -->
+    <ng-template #renderText let-value let-classes="classes" let-highlightSuffix="highlightSuffix">
+      <ng-container *ngIf="isHighlightedText(value); else plainText">
+        <ng-container *ngFor="let part of value.parts">
+          <ng-container *ngIf="isTextHighlight(part); else normalPart">
+            <span
+              [class]="
+                getHighlightClass(part.color) +
+                ' ' +
+                (highlightSuffix || 'highlight-chip mr-1 font-bold')
+              "
+              >{{ part.text }}</span
+            >
+          </ng-container>
+          <ng-template #normalPart>
+            <span [ngClass]="classes">{{ part }}</span>
+          </ng-template>
+        </ng-container>
+      </ng-container>
+      <ng-template #plainText>
+        <span [ngClass]="classes">{{ value }}</span>
+      </ng-template>
+    </ng-template>
+
+    <ng-template
+      #serverHeader
+      let-name="name"
+      let-ip="ip"
+      let-red="red"
+      let-titleClass="titleClass"
+    >
+      <div *ngIf="name" class="flex items-center gap-3">
+        <div
+          class="relative w-8 h-8 bg-blue-100 rounded flex items-center justify-center flex-shrink-0"
+        >
+          <svg
+            class="w-5 h-5 text-blue-600"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <rect x="2" y="6" width="20" height="12" rx="2" />
+            <line x1="6" y1="12" x2="6.01" y2="12" />
+            <line x1="10" y1="12" x2="10.01" y2="12" />
+          </svg>
+          <div
+            *ngIf="red"
+            class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center shadow-sm"
+          >
+            <svg
+              class="w-2.5 h-2.5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            >
+              <line x1="6" y1="6" x2="18" y2="18" />
+              <line x1="18" y1="6" x2="6" y2="18" />
+            </svg>
+          </div>
         </div>
-      }
-      
-      <!-- Nodes 2 & 3: Server with IP and Red X -->
-      @if (data.type === 'server-with-ip') {
-        <div class="space-y-3 min-w-[260px] md:min-w-[320px]">
-          <!-- Server Info with Icon (with or without Red X) -->
-          @if (data.serverName) {
-            <div class="flex items-center gap-3">
-              <div class="relative w-8 h-8 bg-blue-100 rounded flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="2" y="6" width="20" height="12" rx="2"/>
-                  <line x1="6" y1="12" x2="6.01" y2="12"/>
-                  <line x1="10" y1="12" x2="10.01" y2="12"/>
-                </svg>
-                @if (data.hasRedX) {
-                  <div class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center shadow-sm">
-                    <svg class="w-2.5 h-2.5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                      <line x1="6" y1="6" x2="18" y2="18"/>
-                      <line x1="18" y1="6" x2="6" y2="18"/>
-                    </svg>
-                  </div>
-                }
-              </div>
-              <div class="flex-1 min-w-0">
-                <div class="text-base font-bold text-gray-800  truncate">{{ data.serverName }}</div>
-                @if (data.ipAddress) {
-                  <p class="text-base text-gray-500 truncate font-bold">{{ data.ipAddress }}</p>
-                }
-              </div>
-            </div>
-          }
-          
-          <!-- Document Info with Highlighting -->
-          @if (data.documentTitle) {
-            <div class="flex items-start gap-2 mt-1">
-              <svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-              </svg>
-              <span class="text-xs text-gray-700">
-                @if (isHighlightedText(data.documentTitle)) {
-                  @for (part of data.documentTitle.parts; track $index) {
-                    @if (isTextHighlight(part)) {
-                      <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1 font-bold'">{{ part.text }}</span>
-                    } @else {
-                      <span class="text-gray-700 text-base-md font-bold mr-1">{{ part }}</span>
-                    }
-                  }
-                } @else {
-                  {{ data.documentTitle }}
-                }
-              </span>
-            </div>
-          }
-          
-          <!-- Content Lines with Highlighting -->
-          @if (data.contentLines) {
-            <div class="space-y-1 mt-1">
-              @for (line of data.contentLines; track $index) {
-                <div class="text-xs text-gray-700">
-                  @if (isHighlightedText(line)) {
-                    @for (part of line.parts; track $index) {
-                      @if (isTextHighlight(part)) {
-                        <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1 font-bold'">{{ part.text }}</span>
-                      } @else {
-                        <span class="text-gray-700 font-semibold text-base-md mr-1">{{ part }}</span>
-                      }
-                    }
-                  } @else {
-                    {{ line }}
-                  }
-                </div>
-              }
-            </div>
-          }
+
+        <div class="flex-1 min-w-0">
+          <div [ngClass]="titleClass || 'text-base-md font-bold text-gray-800 truncate'">
+            {{ name }}
+          </div>
+          <p *ngIf="ip" class="text-base-md text-gray-500 truncate font-bold">{{ ip }}</p>
         </div>
-      }
-      
-      <!-- Node 4: Simple Server Type -->
-      @if (data.type === 'server-simple') {
-        <div class="space-y-3 min-w-[260px] md:min-w-[320px]">
-          <!-- Server Info with Icon (no Red X) -->
-          @if (data.serverName) {
-            <div class="flex items-center gap-3">
-              <div class="relative w-8 h-8 bg-blue-100 rounded flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="2" y="6" width="20" height="12" rx="2"/>
-                  <line x1="6" y1="12" x2="6.01" y2="12"/>
-                  <line x1="10" y1="12" x2="10.01" y2="12"/>
-                </svg>
-              </div>
-              <span class="text-sm font-medium text-gray-900 truncate">{{ data.serverName }}</span>
-            </div>
-          }
-          
-          <!-- Document Info with Highlighting -->
-          @if (data.documentTitle) {
-            <div class="flex items-start gap-2 mt-1">
-              <svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-              </svg>
-              <span class="text-xs text-gray-700">
-                @if (isHighlightedText(data.documentTitle)) {
-                  @for (part of data.documentTitle.parts; track $index) {
-                    @if (isTextHighlight(part)) {
-                      <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1 font-bold'">{{ part.text }}</span>
-                    } @else {
-                      <span class="text-gray-700 font-bold">{{ part }}</span>
-                    }
-                  }
-                } @else {
-                  {{ data.documentTitle }}
-                }
-              </span>
-            </div>
-          }
-          
-          <!-- Content Lines with Highlighting -->
-          @if (data.contentLines) {
-            <div class="space-y-1 mt-1">
-              @for (line of data.contentLines; track $index) {
-                <div class="text-xs text-gray-700">
-                  @if (isHighlightedText(line)) {
-                    @for (part of line.parts; track $index) {
-                      @if (isTextHighlight(part)) {
-                        <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1 font-bold'">{{ part.text }}</span>
-                      } @else {
-                        <span class="text-gray-700 font-bold">{{ part }}</span>
-                      }
-                    }
-                  } @else {
-                    {{ line }}
-                  }
-                </div>
+      </div>
+    </ng-template>
+
+    <ng-template
+      #documentLine
+      let-value="value"
+      let-classes="classes"
+      let-highlightSuffix="highlightSuffix"
+    >
+      <div *ngIf="value" class="flex items-center gap-2 mt-1">
+        <svg
+          width="11"
+          height="14"
+          viewBox="0 0 11 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6.71875 4.21875H2.96875M7.96875 6.71875H2.96875M6.09375 9.21875H2.96875M0.46875 0.46875V12.9688L1.71875 12.3438L2.96875 12.9688L4.21875 12.3438L5.46875 12.9688L6.71875 12.3438L7.96875 12.9688L9.21875 12.3438L10.4688 12.9688V0.46875L9.21875 1.09375L7.96875 0.46875L6.71875 1.09375L5.46875 0.46875L4.21875 1.09375L2.96875 0.46875L1.71875 1.09375L0.46875 0.46875Z"
+            stroke="#858D9D"
+            stroke-width="0.9375"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+
+        <span class="text-base-md text-gray-700">
+          <ng-container
+            *ngTemplateOutlet="
+              renderText;
+              context: {
+                $implicit: value,
+                classes: classes || 'text-gray-700',
+                highlightSuffix: highlightSuffix,
               }
-            </div>
-          }
+            "
+          ></ng-container>
+        </span>
+      </div>
+    </ng-template>
+
+    <ng-template
+      #contentLines
+      let-lines="lines"
+      let-classNormal="classNormal"
+      let-highlightSuffix="highlightSuffix"
+    >
+      <div class="space-y-1 mt-1" *ngIf="lines?.length">
+        <div *ngFor="let line of lines" class="text-base-md text-gray-700">
+          <ng-container *ngIf="isHighlightedText(line); else plainLine">
+            <ng-container *ngFor="let part of line.parts">
+              <ng-container *ngIf="isTextHighlight(part); else normalPart">
+                <span
+                  [class]="
+                    getHighlightClass(part.color) +
+                    ' ' +
+                    (highlightSuffix || 'highlight-chip mr-1 font-bold')
+                  "
+                  >{{ part.text }}</span
+                >
+              </ng-container>
+              <ng-template #normalPart>
+                <span [ngClass]="classNormal || 'text-gray-700 font-bold'">{{ part }}</span>
+              </ng-template>
+            </ng-container>
+          </ng-container>
+          <ng-template #plainLine>
+            <span [ngClass]="classNormal || 'text-gray-700 font-bold'">{{ line }}</span>
+          </ng-template>
         </div>
-      }
-      
-      <!-- Node 5: Branch Server Type (Complex) -->
-      @if (data.type === 'branch-server') {
-        <div class="space-y-3 min-w-[300px] md:min-w-[360px]">
-          <!-- Server Info with Icon (no Red X) -->
-          @if (data.serverName) {
-            <div class="flex items-center gap-3">
-              <div class="relative w-8 h-8 bg-blue-100 rounded flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="2" y="6" width="20" height="12" rx="2"/>
-                  <line x1="6" y1="12" x2="6.01" y2="12"/>
-                  <line x1="10" y1="12" x2="10.01" y2="12"/>
-                </svg>
-              </div>
-              <span class="text-base font-medium text-gray-900 truncate">{{ data.serverName }}</span>
-            </div>
-          }
-          
-          <!-- Document Info with Multiple Highlights -->
-          @if (data.documentTitle) {
-            <div class="flex items-start gap-1 mt-1">
-              <svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-              </svg>
-              <span class="text-xs text-gray-700">
-                @if (isHighlightedText(data.documentTitle)) {
-                  @for (part of data.documentTitle.parts; track $index) {
-                    @if (isTextHighlight(part)) {
-                      <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
-                    } @else {
-                      <span class="text-gray-700">{{ part }}</span>
-                    }
-                  }
-                } @else {
-                  {{ data.documentTitle }}
-                }
-              </span>
-            </div>
-          }
-          
-          <!-- Multiple Content Lines with Various Highlights -->
-          @if (data.contentLines) {
-            <div class=" mt-1">
-              @for (line of data.contentLines; track $index) {
-                <div class="text-xs text-gray-700">
-                  @if (isHighlightedText(line)) {
-                    @for (part of line.parts; track $index) {
-                      @if (isTextHighlight(part)) {
-                        <span [class]="getHighlightClass(part.color) + ' highlight-chip mr-1'">{{ part.text }}</span>
-                      } @else {
-                        <span class="text-gray-700">{{ part }}</span>
-                      }
-                    }
-                  } @else {
-                    {{ line }}
-                  }
-                </div>
-              }
-            </div>
-          }
+      </div>
+    </ng-template>
+
+    <ng-template #gridNumbers let-numbers="numbers">
+      <div
+        *ngIf="numbers?.length"
+        class="grid grid-cols-3 gap-2"
+        [ngClass]="{ 'ml-8': numbers.length === 6 }"
+      >
+        <span
+          *ngFor="let n of numbers"
+          class="text-base-md bg-red-100 text-red-700 pl-2 pr-12 py-1 rounded inline-block font-bold"
+          >{{ n }}</span
+        >
+      </div>
+    </ng-template>
+
+    <ng-template #badges let-bads="bads">
+      <div *ngIf="bads?.length" class="flex items-center gap-2 mt-2">
+        <div *ngFor="let badge of bads" class="flex items-center gap-1">
+          <div
+            [ngClass]="{
+              'bg-red-500': badge.color === 'red',
+              'bg-orange-500': badge.color === 'orange',
+              'bg-emerald-500': badge.color === 'green',
+            }"
+            class="w-5 h-5 rounded-full flex items-center justify-center"
+          >
+            <span class="text-white text-base-md font-bold">⚠</span>
+          </div>
+          <span class="text-base-md font-medium text-gray-700">{{ badge.text }}</span>
         </div>
-      }
-      
-      <!-- Legacy Server Node Type (fallback) -->
-      @if (data.type === 'server') {
-        <div class="space-y-3 min-w-[260px] md:min-w-[320px]">
-          <!-- Server Info -->
-          @if (data.serverName) {
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 bg-blue-100 rounded flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="2" y="6" width="20" height="12" rx="2"/>
-                  <line x1="6" y1="12" x2="6.01" y2="12"/>
-                  <line x1="10" y1="12" x2="10.01" y2="12"/>
-                </svg>
-              </div>
-              <span class="text-sm font-medium text-gray-900 truncate">{{ data.serverName }}</span>
-            </div>
-          }
-          
-          <!-- Document Info -->
-          @if (data.documentTitle) {
-            <div class="flex items-start gap-2 mt-1">
-              <svg class="w-4 h-4 text-gray-400 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-              </svg>
-              <span class="text-xs text-gray-700">{{ data.documentTitle }}</span>
-            </div>
-          }
-          
-          <!-- Content Lines -->
-          @if (data.contentLines) {
-            <div class="space-y-1 mt-1">
-              @for (line of data.contentLines; track $index) {
-                <div class="text-xs text-blue-600 font-medium">{{ line }}</div>
-              }
-            </div>
-          }
-          
-          <!-- Badges -->
-          @if (data.badges && data.badges.length > 0) {
-            <div class="flex items-center gap-2 mt-2">
-              @for (badge of data.badges; track $index) {
-                <div class="flex items-center gap-1">
-                  <div 
-                    [ngClass]="{
-                      'bg-red-500': badge.color === 'red',
-                      'bg-orange-500': badge.color === 'orange',
-                      'bg-emerald-500': badge.color === 'green'
-                    }"
-                    class="w-5 h-5 rounded-full flex items-center justify-center">
-                    <span class="text-white text-xs font-bold">⚠</span>
-                  </div>
-                  <span class="text-xs font-medium text-gray-700">{{ badge.text }}</span>
-                </div>
-              }
-            </div>
-          }
-        </div>
-      }
+      </div>
+    </ng-template>
+
+    <!-- Main type-based rendering (reusable building blocks used) -->
+    <!-- Email -->
+    <div *ngIf="data.type === 'email'" class="space-y-3 min-w-[260px] md:min-w-[300px]">
+      <h3 *ngIf="data.title" class="text-base-md font-bold leading-tight">
+        <ng-container
+          *ngTemplateOutlet="
+            renderText;
+            context: {
+              $implicit: data.title,
+              classes: 'text-critical font-bold pr-8',
+              highlightSuffix: 'highlight-chip pr-8 mr-1 text-base-md-md font-bold',
+            }
+          "
+        ></ng-container>
+      </h3>
+
+      <ng-container
+        *ngTemplateOutlet="gridNumbers; context: { numbers: data.gridNumbers }"
+      ></ng-container>
+
+      <div *ngIf="data.documentTitle" class="text-base-md font-medium">
+        <ng-container
+          *ngTemplateOutlet="
+            renderText;
+            context: {
+              $implicit: data.documentTitle,
+              classes: 'text-blue-600 font-bold',
+              highlightSuffix: 'highlight-chip mr-1 font-bold text-lg',
+            }
+          "
+        ></ng-container>
+      </div>
     </div>
-  }
+
+    <!-- Server with IP -->
+    <div *ngIf="data.type === 'server-with-ip'" class="space-y-3 min-w-[260px] md:min-w-[320px]">
+      <ng-container
+        *ngTemplateOutlet="
+          serverHeader;
+          context: {
+            name: data.serverName,
+            ip: data.ipAddress,
+            red: data.hasRedX,
+            titleClass: 'text-base-md font-bold text-gray-800 truncate',
+          }
+        "
+      ></ng-container>
+
+      <ng-container *ngIf="data.documentTitle">
+        <ng-container
+          *ngTemplateOutlet="
+            documentLine;
+            context: {
+              value: data.documentTitle,
+              classes: 'text-gray-700 text-base-md-md font-bold',
+              highlightSuffix: 'highlight-chip mr-1 font-bold',
+            }
+          "
+        ></ng-container>
+      </ng-container>
+
+      <ng-container
+        *ngTemplateOutlet="
+          contentLines;
+          context: {
+            lines: data.contentLines,
+            classNormal: 'text-gray-700 font-semibold text-base-md-md mr-1',
+            highlightSuffix: 'highlight-chip mr-1 font-bold',
+          }
+        "
+      ></ng-container>
+    </div>
+
+    <!-- Simple Server -->
+    <div *ngIf="data.type === 'server-simple'" class="space-y-3 min-w-[260px] md:min-w-[320px]">
+      <ng-container
+        *ngTemplateOutlet="
+          serverHeader;
+          context: {
+            name: data.serverName,
+            ip: null,
+            red: false,
+            titleClass: 'text-base-md font-medium text-gray-900 truncate',
+          }
+        "
+      ></ng-container>
+
+      <ng-container *ngIf="data.documentTitle">
+        <ng-container
+          *ngTemplateOutlet="documentLine; context: { value: data.documentTitle }"
+        ></ng-container>
+      </ng-container>
+
+      <ng-container
+        *ngTemplateOutlet="contentLines; context: { lines: data.contentLines }"
+      ></ng-container>
+    </div>
+
+    <!-- Branch Server -->
+    <div *ngIf="data.type === 'branch-server'" class="space-y-3 min-w-[300px] md:min-w-[360px]">
+      <ng-container
+        *ngTemplateOutlet="
+          serverHeader;
+          context: {
+            name: data.serverName,
+            ip: null,
+            red: false,
+            titleClass: 'text-base-md font-medium text-gray-900 truncate',
+          }
+        "
+      ></ng-container>
+
+      <ng-container *ngIf="data.documentTitle">
+        <ng-container
+          *ngTemplateOutlet="
+            documentLine;
+            context: { value: data.documentTitle, highlightSuffix: 'highlight-chip mr-1' }
+          "
+        ></ng-container>
+      </ng-container>
+
+      <ng-container
+        *ngTemplateOutlet="
+          contentLines;
+          context: { lines: data.contentLines, highlightSuffix: 'highlight-chip mr-1' }
+        "
+      ></ng-container>
+    </div>
+
+    <!-- Legacy Server -->
+    <div *ngIf="data.type === 'server'" class="space-y-3 min-w-[260px] md:min-w-[320px]">
+      <ng-container
+        *ngTemplateOutlet="
+          serverHeader;
+          context: {
+            name: data.serverName,
+            ip: null,
+            red: false,
+            titleClass: 'text-base-md font-medium text-gray-900 truncate',
+          }
+        "
+      ></ng-container>
+
+      <div *ngIf="data.documentTitle" class="flex items-start gap-2 mt-1">
+        <svg
+          class="w-4 h-4 text-gray-400 mt-0.5"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+        </svg>
+        <span class="text-base-md text-base-md-md text-gray-700">{{ data.documentTitle }}</span>
+      </div>
+
+      <div *ngIf="data.contentLines" class="space-y-1 mt-1">
+        <div *ngFor="let line of data.contentLines" class="text-base-md text-blue-600 font-medium">
+          {{ line }}
+        </div>
+      </div>
+
+      <ng-container *ngTemplateOutlet="badges; context: { bads: data.badges }"></ng-container>
+    </div>
+  </div>
+</ng-container>
