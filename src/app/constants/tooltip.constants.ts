@@ -23,15 +23,11 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
   '1': {
     type: 'email',
     title: {
-      parts: [
-        { text: 'Lorem Ipsum Dolor Sit', color: 'red' }
-      ]
+      parts: [{ text: 'Lorem Ipsum Dolor Sit', color: 'red' }],
     },
     gridNumbers: ['1.2.3.4', '1.2.3.4', '1.2.3.4', '1.2.3.4', '1.2.3.4', '1.2.3.4'],
     documentTitle: {
-      parts: [
-        { text: 'Lorem: 1.2.3.4', color: 'purple' }
-      ]
+      parts: [{ text: 'Lorem: 1.2.3.4', color: 'purple' }],
     },
   },
   '2': {
@@ -39,10 +35,7 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
     serverName: 'Loremipsu',
     hasRedX: true,
     documentTitle: {
-      parts: [
-        'Lorem: Loremipsum Loremipsum',
-        { text: '1.2.3.4', color: 'purple' }
-      ]
+      parts: ['Lorem: Loremipsum Loremipsum', { text: '1.2.3.4', color: 'purple' }],
     },
     contentLines: [
       {
@@ -50,9 +43,9 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
           { text: 'Lorem 1.2.3.4', color: 'blue' },
           'Loremipsum',
           { text: 'Lorem 1.2.3.4', color: 'blue' },
-          { text: 'Lorem 1.2.3.4', color: 'blue' }
-        ]
-      }
+          { text: 'Lorem 1.2.3.4', color: 'blue' },
+        ],
+      },
     ],
   },
   '3': {
@@ -60,10 +53,7 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
     serverName: 'Loremipsumdolorsit002',
     hasRedX: true,
     documentTitle: {
-      parts: [
-        'Lorem: Loremipsum Loremipsum',
-        { text: '1.2.3.4', color: 'purple' }
-      ]
+      parts: ['Lorem: Loremipsum Loremipsum', { text: '1.2.3.4', color: 'purple' }],
     },
     contentLines: [
       {
@@ -71,29 +61,23 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
           { text: 'Lorem 1.2.3.4', color: 'blue' },
           'Loremipsum',
           { text: 'Lorem 1.2.3.4', color: 'blue' },
-          { text: 'Lorem 1.2.3.4', color: 'blue' }
-        ]
-      }
+          { text: 'Lorem 1.2.3.4', color: 'blue' },
+        ],
+      },
     ],
   },
   '4': {
     type: 'server-simple',
     serverName: 'Loremipsu',
     hasRedX: false,
-        ipAddress: '192.168.1.2',
+    ipAddress: '192.168.1.2',
     documentTitle: {
-      parts: [
-        'Lorem:',
-        { text: 'Lorem "Ipsum"', color: 'yellow' }
-      ]
+      parts: ['Lorem:', { text: 'Lorem "Ipsum"', color: 'yellow' }],
     },
     contentLines: [
       {
-        parts: [
-          ' Loremipsum ',
-          { text: 'Lorem 1234, 5678', color: 'purple' },
-        ]
-      }
+        parts: [' Loremipsum ', { text: 'Lorem 1234, 5678', color: 'purple' }],
+      },
     ],
   },
   '5': {
@@ -102,18 +86,12 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
     hasRedX: true,
     ipAddress: '192.168.1.2',
     documentTitle: {
-      parts: [
-        'Lorem:',
-        { text: 'Lorem "Ipsum"', color: 'yellow' }
-      ]
+      parts: ['Lorem:', { text: 'Lorem "Ipsum"', color: 'yellow' }],
     },
     contentLines: [
       {
-        parts: [
-          ' Loremipsum ',
-          { text: 'Lorem 1234, 5678', color: 'purple' },
-        ]
-      }
+        parts: [' Loremipsum ', { text: 'Lorem 1234, 5678', color: 'purple' }],
+      },
     ],
   },
 };
@@ -121,4 +99,3 @@ export const TOOLTIP_DATA_MAP: Record<string, NodeTooltipData> = {
 export const getTooltipData = (nodeId: string): NodeTooltipData => {
   return TOOLTIP_DATA_MAP[nodeId] || { type: 'server' };
 };
-

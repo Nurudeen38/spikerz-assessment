@@ -182,7 +182,7 @@
 
     <!-- Main type-based rendering (reusable building blocks used) -->
     <!-- Email -->
-    <div *ngIf="data.type === 'email'" class="space-y-3 min-w-[260px] md:min-w-[300px]">
+    <div *ngIf="data.type === 'email'" class="space-y-1 min-w-[260px] md:min-w-[300px]">
       <h3 *ngIf="data.title" class="text-base-md font-bold leading-tight">
         <ng-container
           *ngTemplateOutlet="
@@ -215,7 +215,7 @@
     </div>
 
     <!-- Server with IP -->
-    <div *ngIf="data.type === 'server-with-ip'" class="space-y-3 min-w-[260px] md:min-w-[320px]">
+    <div *ngIf="data.type === 'server-with-ip'" class="space-y-1 min-w-[260px] md:min-w-[360px]">
       <ng-container
         *ngTemplateOutlet="
           serverHeader;
@@ -254,7 +254,7 @@
     </div>
 
     <!-- Simple Server -->
-    <div *ngIf="data.type === 'server-simple'" class="space-y-3 min-w-[260px] md:min-w-[320px]">
+    <div *ngIf="data.type === 'server-simple'" class="space-y-1 min-w-[260px] md:min-w-[320px]">
       <ng-container
         *ngTemplateOutlet="
           serverHeader;
@@ -279,7 +279,7 @@
     </div>
 
     <!-- Branch Server -->
-    <div *ngIf="data.type === 'branch-server'" class="space-y-3 min-w-[300px] md:min-w-[360px]">
+    <div *ngIf="data.type === 'branch-server'" class="space-y-1 min-w-[300px] md:min-w-[240px]">
       <ng-container
         *ngTemplateOutlet="
           serverHeader;
@@ -310,13 +310,13 @@
     </div>
 
     <!-- Legacy Server -->
-    <div *ngIf="data.type === 'server'" class="space-y-3 min-w-[260px] md:min-w-[320px]">
+    <div *ngIf="data.type === 'server'" class="space-y-1 min-w-[260px] md:min-w-[200px]">
       <ng-container
         *ngTemplateOutlet="
           serverHeader;
           context: {
             name: data.serverName,
-            ip: null,
+            ip: data.ipAddress,
             red: false,
             titleClass: 'text-base-md font-medium text-gray-900 truncate',
           }
