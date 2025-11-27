@@ -63,8 +63,8 @@ export class GraphViewComponent implements OnDestroy {
       { x: startX, y: centerY },
       { x: startX + baseSpacing, y: centerY },
       { x: startX + baseSpacing * 2, y: centerY },
-      { x: startX + baseSpacing * 3 + 120, y: centerY - branchOffset }, // Moved node 4 right by 20px
-      { x: startX + baseSpacing * 3 + 120, y: centerY + branchOffset }, // Moved node 5 right by 20px
+      { x: startX + baseSpacing * 3 + 120, y: centerY - branchOffset },
+      { x: startX + baseSpacing * 3 + 120, y: centerY + branchOffset },
     ];
 
     return nodes.map((node, index) => ({
@@ -75,39 +75,32 @@ export class GraphViewComponent implements OnDestroy {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getBranchPath(edge: GraphEdge, _direction: 'up' | 'down'): string {
+  getBranchPath(edge: GraphEdge): string {
     const source = this.getNodePosition(edge.source);
     const target = this.getNodePosition(edge.target);
 
     const nodeRadius = 24;
 
-    // Start point - right edge of source node
     const startX = source.x + nodeRadius + 4;
     const startY = source.y;
 
-    // End point - 10px gap before the node edge
     const endX = target.x - nodeRadius - 10;
     const endY = target.y;
 
-    // Calculate control points
     const horizontalDistance = endX - startX;
 
-    // First horizontal segment (about 30% of total distance)
     const firstSegmentLength = horizontalDistance * 0.3;
     const curveStartX = startX + firstSegmentLength;
 
-    // Curve segment (about 50% of total distance)
     const curveLength = horizontalDistance * 0.5;
     const curveEndX = curveStartX + curveLength;
 
-    // Control points for smooth bezier curve
     const controlPoint1X = curveStartX + curveLength * 0.3;
     const controlPoint1Y = startY;
 
     const controlPoint2X = curveStartX + curveLength * 0.7;
     const controlPoint2Y = endY;
 
-    // Final L segment from curveEndX to endX is now VISIBLY longer (20% of total path)
     return `
       M ${startX},${startY}
       L ${curveStartX},${startY}
@@ -122,7 +115,6 @@ export class GraphViewComponent implements OnDestroy {
     const target = this.getNodePosition(edge.target);
     const nodeRadius = 24;
     
-    // End point - same as the path end point (10px gap before node edge)
     const endX = target.x - nodeRadius - 10;
     const endY = target.y;
     
@@ -151,8 +143,7 @@ export class GraphViewComponent implements OnDestroy {
     event.stopPropagation();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onNodeHover(node: GraphNode, event: MouseEvent): void {
+  onNodeHover(node: GraphNode): void {
     const tooltipData = this.getTooltipData(node);
 
     const svgRect = this.svgCanvas?.nativeElement.getBoundingClientRect();
@@ -161,7 +152,6 @@ export class GraphViewComponent implements OnDestroy {
     const isMobile = screenWidth < 768;
 
     let x = (node.x ?? 0) + 50;
-    // Position tooltip below the node (node center + radius + text height + gap)
     const y = (node.y ?? 0) + 50;
 
     if (isMobile) {
@@ -173,9 +163,7 @@ export class GraphViewComponent implements OnDestroy {
     } else {
       if ((node.x ?? 0) < 300) {
         x = (node.x ?? 0) - 50
-      }
-
-      else if ((node.x ?? 0) > containerWidth - 250) {
+      } else if ((node.x ?? 0) > containerWidth - 250) {
         x = (node.x ?? 0) - 250;
       } else {
         x = (node.x ?? 0) - 50

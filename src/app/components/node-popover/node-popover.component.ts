@@ -82,7 +82,6 @@ export class NodePopoverComponent {
     }
   }
 
-  // Donut chart calculations
   private getCircumference(): number {
     return this.CIRCUMFERENCE;
   }
