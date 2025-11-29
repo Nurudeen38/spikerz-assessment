@@ -1,89 +1,77 @@
 # Spikerz (Angular 20.3.6)
 
-Overview
-This repository contains a small single-page dashboard application built with Angular 20.3.6. The app demonstrates a compact admin-style UI including a network graph, node tooltips, a node details popover, sidebar navigation, and a set of reusable components and utilities.
+A compact dashboard SPA built with Angular 20.3.6, featuring a responsive layout, network graph, node popover, sidebar navigation, and reusable components.
 
-## Key features
-1. Dashboard
-- Central layout with a collapsible sidebar and responsive main content.
-- Graph panel, node popover, and supporting cards/components.
+## Features
 
-2. Graph view
-- SVG-based network graph with positioned nodes, edges, and animated/branch edges.
-- Node hover tooltip and click-to-open popover for node details.
+- **Dashboard**: Collapsible sidebar, responsive main content, graph panel, node popover, and supporting cards.
+- **Graph View**: SVG network graph with positioned nodes, edges, and animated branches.
+- **Node Popover & Tooltip**: Paginated asset list, donut chart risk visualization, rich tooltips.
+- **Data Handling**: Mock graph data via singleton service (`GraphDataService`) using Signals.
+- **Responsive UI & Theming**: Tailwind + CSS variables for consistent design.
+- **Developer Ergonomics**: Standalone components, Signals, computed state, ESLint, Prettier, Husky.
 
-3. Node popover & tooltip
-- Paginated asset list with donut chart visualizing risk distribution.
-- Rich tooltip rendering with support for highlighted text parts.
-
-4. Data handling & services
-- Mock graph data loaded via a singleton service (`GraphDataService`) with Signals-based state.
-- Selection state exposed as readonly signals for components to consume.
-
-5. Responsive UI & theming
-- Tailwind + custom CSS variables for consistent spacing, colors, and sizes.
-- Mobile-first responsive layout and accessible controls.
-
-6. Developer ergonomics
-- Standalone components, Signals, and computed derived state.
-- ESLint + Prettier + Husky configured for consistent formatting and pre-commit checks.
-
-## Installation & setup
+## Setup
 
 ### Prerequisites
-- Node.js (Latest LTS recommended)
-- Angular CLI (optional if using npm scripts)
 
-Clone the repository
+- Node.js (LTS)
+- Angular CLI (optional)
+
+```sh
 git clone <your-repo-url>
 cd spikerz
-
-Install dependencies
 npm install
-
-Run (development)
 npm start
-or
+# or
 ng serve
+```
 
-Open http://localhost:4200/ to view the app.
+Open [http://localhost:4200/](http://localhost:4200/).
 
-Build for production
+### Build
+
+```sh
 npm run build
-(or)
+# or
 ng build --configuration production
+```
 
-Testing
-Run unit tests:
+### Testing
+
+```sh
 npm test
-End-to-end:
-npm run e2e (configure your e2e tool if required)
+```
 
-Scripts (from package.json)
-- start: ng serve
-- build: ng build --configuration production
-- test: ng test
-- lint / lint:fix: ng lint
+## Scripts
 
-Useful files and entry points
-- Root README: [README.md](README.md)
-- Project config: [package.json](package.json)
-- App bootstrap: [src/main.ts](src/main.ts)
-- Root component: [`App`](src/app/app.ts)
-- Dashboard: [`DashboardComponent`](src/app/components/dashboard/dashboard.component.ts)
-- Graph view: [`GraphViewComponent`](src/app/components/graph-view/graph-view.component.ts)
-- Node popover: [`NodePopoverComponent`](src/app/components/node-popover/node-popover.component.ts)
-- Graph data service: [`GraphDataService`](src/app/services/graph-data.service.ts)
-- Tailwind + styles: [tailwind.config.js](tailwind.config.js), [src/styles.scss](src/styles.scss)
+- `start`: ng serve
+- `build`: ng build --configuration production
+- `test`: ng test
+- `lint`: ng lint
+- `lint:fix`: ng lint --fix
 
-Contributing
-- Follow TypeScript strict rules and repository linting config.
-- Run linters and formatters before committing (pre-commit hooks enabled).
-- Open PRs against main with small, focused changes.
+## Key Files
 
-Notes
-- The app uses Angular Signals for local state and computed() for derived values.
-- Mock data is located under [src/app/constants/graph.constants.ts](src/app/constants/graph.constants.ts).
+- App bootstrap: `src/main.ts`
+- Root component: `src/app/app.ts`
+- Dashboard: `src/app/components/dashboard/dashboard.component.ts`
+- Graph view: `src/app/components/graph-view/graph-view.component.ts`
+- Node popover: `src/app/components/node-popover/node-popover.component.ts`
+- Graph data service: `src/app/services/graph-data.service.ts`
+- Styles: `tailwind.config.js`, `src/styles.scss`
 
-License
-This project is for assessment/demo purposes.
+## Contributing
+
+- Follow strict TypeScript and Angular linting rules.
+- Run linters and formatters before committing.
+- Open focused PRs against main.
+
+## Notes
+
+- Uses Angular Signals and computed state.
+- Mock data: `src/app/constants/graph.constants.ts`.
+
+## License
+
+For assessment/demo purposes only.
