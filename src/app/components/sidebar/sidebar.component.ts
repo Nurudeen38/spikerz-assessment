@@ -29,6 +29,24 @@ export class SidebarComponent implements OnInit {
     this.checkScreenSize();
   }
 
+  @HostListener('mouseenter')
+  handleMouseEnter(): void {
+    this.onSidebarHover(true);
+  }
+
+  @HostListener('mouseleave')
+  handleMouseLeave(): void {
+    this.onSidebarHover(false);
+  }
+
+  get isCollapse(): boolean {
+    return this.isCollapsed();
+  }
+  
+  get isHover(): boolean {
+    return this.isHovering();
+  }
+
   private checkScreenSize(): void {
     this.isCollapsed.set(ResponsiveUtil.isMobile());
   }
@@ -38,7 +56,7 @@ export class SidebarComponent implements OnInit {
   }
 
   toggleSidebar(): void {
-    this.isCollapsed.update(collapsed => !collapsed);
+    this.isCollapsed.update((collapsed) => !collapsed);
   }
 
   onSidebarHover(hovering: boolean): void {

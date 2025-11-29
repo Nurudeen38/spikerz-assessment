@@ -1,12 +1,10 @@
 <div
   class="h-screen bg-white rounded-r-2xl shadow-lg flex flex-col transition-all duration-300 sidebar"
-  [class.sidebar-expanded]="!isCollapsed()"
-  [class.sidebar-collapsed]="isCollapsed()"
-  (mouseenter)="onSidebarHover(true)"
-  (mouseleave)="onSidebarHover(false)"
+  [class.sidebar-expanded]="!isCollapse"
+  [class.sidebar-collapsed]="isCollapse"
 >
   <!-- Logo - Only visible when collapsed -->
-  @if (isCollapsed()) {
+  @if (isCollapse) {
     <div class="flex items-center justify-center pt-4 pb-4">
       <img src="assets/icons/logo.png" alt="Logo" class="w-10 h-10" />
     </div>
@@ -16,20 +14,20 @@
   <button
     (click)="toggleSidebar()"
     class="flex items-center justify-center collapse-button fixed top-[calc(3.5rem-8px)]"
-    [class.button-visible]="!isCollapsed() || isHovering()"
-    [class.button-hidden]="isCollapsed() && !isHovering()"
-    [class.left-16]="isCollapsed()"
-    [class.left-56]="!isCollapsed()"
+    [class.button-visible]="!isCollapse || isHover"
+    [class.button-hidden]="isCollapse && !isHover"
+    [class.left-16]="isCollapse"
+    [class.left-56]="!isCollapse"
   >
     <span
       class="text-white font-bold text-lg leading-none flex items-center justify-center w-full h-full"
     >
-      <img [class.rotate-180]="isCollapsed()" src="assets/icons/chevron-left.svg" alt="Logo" class="w-4 h-4 p-1" />
+      <img [class.rotate-180]="isCollapse" src="assets/icons/chevron-left.svg" alt="Logo" class="w-4 h-4 p-1" />
     </span>
   </button>
 
   <!-- Main Menu -->
-  <nav class="flex-1 pt-12 px-4 space-y-1" [class.pt-4]="isCollapsed()">
+  <nav class="flex-1 pt-12 px-4 space-y-1" [class.pt-4]="isCollapse">
     @for (item of menuItems; track $index) {
       <button
         (click)="selectMenuItem($index)"
@@ -38,8 +36,8 @@
         [class.text-gray-600]="activeMenuIndex() !== $index"
         [class.hover:bg-emerald-100]="activeMenuIndex() === $index"
         [class.hover:bg-gray-50]="activeMenuIndex() !== $index"
-        [class.justify-center]="isCollapsed()"
-        [class.justify-start]="!isCollapsed()"
+        [class.justify-center]="isCollapse"
+        [class.justify-start]="!isCollapse"
         class="w-full flex items-center gap-3 px-2 py-3 rounded-sm transition-colors group relative"
       >
         <img
@@ -48,7 +46,7 @@
           class="flex-shrink-0 w-5 h-5 min-w-5 min-h-5"
         />
 
-        @if (!isCollapsed()) {
+        @if (!isCollapse) {
           <span
             class="font-normal text-gray-700 overflow-hidden text-ellipsis text-base-md  leading-md tracking-1 capitalize"
             >{{ item.label }}</span
@@ -56,7 +54,7 @@
         }
 
         <!-- Tooltip for collapsed state -->
-        @if (isCollapsed()) {
+        @if (isCollapse) {
           <div
             class="absolute left-full ml-2 px-2 py-1 bg-emerald-50 text-black text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-100"
           >
@@ -68,7 +66,7 @@
   </nav>
 
   <!-- Bottom Menu -->
-  <div class="px-4 pb-4 flex flex-col" [class.pt-0]="isCollapsed()" [class.mt-0]="isCollapsed()">
+  <div class="px-4 pb-4 flex flex-col" [class.pt-0]="isCollapse" [class.mt-0]="isCollapse">
     @for (item of bottomMenuItems; track $index) {
       <button
         (click)="selectBottomMenuItem($index)"
@@ -77,8 +75,8 @@
         [class.text-gray-600]="activeBottomMenuIndex() !== $index"
         [class.hover:bg-emerald-100]="activeBottomMenuIndex() === $index"
         [class.hover:bg-gray-50]="activeBottomMenuIndex() !== $index"
-        [class.justify-center]="isCollapsed()"
-        [class.justify-start]="!isCollapsed()"
+        [class.justify-center]="isCollapse"
+        [class.justify-start]="!isCollapse"
         [class.mb-1]="$index < bottomMenuItems.length - 1"
         class="w-full flex items-center gap-3 px-2 py-3 rounded-sm transition-colors group relative menu-item"
       >
@@ -88,7 +86,7 @@
           class="flex-shrink-0 w-5 h-5 min-w-5 min-h-5"
         />
 
-        @if (!isCollapsed()) {
+        @if (!isCollapse) {
           <span
             class="font-normal overflow-hidden text-gray-700 text-ellipsis text-base-md lleading-md tracking-1 capitalize"
             >{{ item.label }}</span
@@ -98,25 +96,25 @@
     }
 
     <!-- Divider - only visible when expanded -->
-    @if (!isCollapsed()) {
+    @if (!isCollapse) {
       <div class="border-t border-gray-200 mt-8 mb-5"></div>
     }
 
     <!-- User Profile with logout -->
     <button
-      [class.justify-center]="isCollapsed()"
-      [class.justify-start]="!isCollapsed()"
-      [class.mt-12]="isCollapsed()"
+      [class.justify-center]="isCollapse"
+      [class.justify-start]="!isCollapse"
+      [class.mt-12]="isCollapse"
       class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors group relative"
     >
       <div
         class="rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden transition-all duration-300"
-        [ngClass]="isCollapsed() ? 'w-8 h-8' : 'w-12 h-12'"
+        [ngClass]="isCollapse ? 'w-8 h-8' : 'w-12 h-12'"
       >
         <img [src]="getIconPath('person')" alt="user" class="w-full h-full object-cover" />
       </div>
 
-      @if (!isCollapsed()) {
+      @if (!isCollapse) {
         <div class="flex-1 text-left overflow-hidden">
           <div class="text-sm font-medium text-gray-900 overflow-hidden text-ellipsis">Lorem</div>
           <div class="text-xs text-gray-500 overflow-hidden text-ellipsis">Lorem</div>
